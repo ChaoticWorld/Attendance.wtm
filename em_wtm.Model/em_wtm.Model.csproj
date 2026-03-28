@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <PreserveCompilationReferences>true</PreserveCompilationReferences>
+ </PropertyGroup>
+
+
+  <ItemGroup>
+    <Compile Remove="_Business\Disable\**" />
+    <Compile Remove="_Business\Report\dockModel\**" />
+    <EmbeddedResource Remove="_Business\Disable\**" />
+    <EmbeddedResource Remove="_Business\Report\dockModel\**" />
+    <None Remove="_Business\Disable\**" />
+    <None Remove="_Business\Report\dockModel\**" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="WalkingTec.Mvvm.Core" Version="6.3.25" />
+  </ItemGroup>
+</Project>
+

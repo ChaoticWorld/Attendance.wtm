@@ -1,0 +1,39 @@
+﻿@page "/_host"
+@namespace em_wtm
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+  Layout = null;
+}
+@inject WalkingTec.Mvvm.Core.WTMContext wtm
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>em</title>
+  <base href="~/" />
+  <link href="_content/em_wtm.Shared/font-awesome/css/all.min.css" rel="stylesheet">
+  <link href="_content/BootstrapBlazor/css/bootstrap.blazor.bundle.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="_content/em_wtm.Shared/css/site.css">
+  <link rel="stylesheet" href="_content/em_wtm.Shared/css/loading.css">
+  <link rel="stylesheet" href="_content/em_wtm.Shared/font/iconfont.css">
+  <link rel="stylesheet" href="em_wtm.styles.css">
+</head>
+<body>
+<component type="typeof(em_wtm.Shared.App)" render-mode="Server" />
+    <div id="blazor-error-ui">
+    <environment include="Staging,Production">
+      An error has occurred. This application may no longer respond until reloaded.
+    </environment>
+    <environment include="Development">
+      An unhandled exception has occurred. See browser dev tools for details.
+    </environment>
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+  </div>
+
+  <script src="_content/BootstrapBlazor/js/bootstrap.blazor.bundle.min.js"></script>
+  <script src="_content/em_wtm.Shared/js/common.js"></script>
+  <script src="_framework/blazor.server.js"></script>
+</body>
+</html>

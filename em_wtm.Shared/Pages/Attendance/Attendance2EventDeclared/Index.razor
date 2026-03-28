@@ -1,0 +1,170 @@
+﻿@page "/Attendance/Attendance2EventDeclared"
+@using em_wtm.ViewModel.Attendance.Attendance2EventDeclaredVMs;
+@using em_wtm.ViewModel.Attendance.VAttendanceReportVMs;
+@using em_wtm.Model._Business.Attendance;
+@inherits BasePage
+@attribute [ActionDescription("考勤事件", "em_wtm.Controllers,Attendance2EventDeclared")]
+
+<div class="@hiddenWTSearchPanel">
+    <WTSearchPanel OnSearch="@DoSearch">
+        <ValidateForm Model="@SearchModel">
+        <Row ItemsPerRow="ItemsPerRow.Three" RowType="RowType.Inline">
+            <BootstrapInputNumber @bind-Value="record.ID" ShowLabel="true" DisplayText="考勤ID" />
+            @*<Select @bind-Value="@SearchModel.RecordId" Items="@AllAttendance2Records" PlaceHolder="@WtmBlazor.Localizer["Sys.All"]" ShowLabel="true" DisplayText="考勤日期"  />*@
+        </Row>
+    </ValidateForm>
+</WTSearchPanel>
+</div>
+
+<Table @ref="EdataTable" TItem="Attendance2EventDeclared_View" OnQueryAsync="OnSearch" IsPagination="false" IsStriped="true" IsBordered="true" ShowRefresh="false"
+       ShowToolbar="true" IsMultipleSelect="true" ShowExtendButtons="true" ShowDefaultButtons="false" ShowExtendEditButton="false" ShowExtendDeleteButton="false" style="margin-top:10px;">
+    <TableColumns>
+        <TableColumn @bind-Field="@context.EventDescription"  />
+        <TableColumn @bind-Field="@context.Fee"  />
+        <TableColumn @bind-Field="@context.Memo"  />
+        <TableColumn @bind-Field="@context.CheckMan"  />
+        <TableColumn @bind-Field="@context.Manager"  />
+        <TableColumn @bind-Field="@context.SDate"  />
+        <TableColumn @bind-Field="@context.IsBeginTime" ComponentType="@typeof(Switch)" />
+    </TableColumns>
+    <TableToolbarTemplate>
+        @if (IsAccessable("/api/Attendance2EventDeclared/Add"))
+        {
+            <TableToolbarButton TItem="Attendance2EventDeclared_View" Color="Color.Primary" Icon="fa fa-fw fa-plus" Text="@WtmBlazor.Localizer["Sys.Create"]" OnClickCallback="OnCreateClick" />
+        }
+        @if (IsAccessable("/api/Attendance2EventDeclared/BatchDelete"))
+        {
+            <TableToolbarPopconfirmButton TItem="Attendance2EventDeclared_View" Color="Color.Primary"
+                                          Icon="fa fa-fw fa-trash" Text="@WtmBlazor.Localizer["Sys.BatchDelete"]"
+                                          OnConfirm="@OnBatchDeleteClick" Content="@WtmBlazor.Localizer["Sys.BatchDeleteConfirm"]" CloseButtonText="@WtmBlazor.Localizer["Sys.Close"]"
+                                          ConfirmButtonText="@WtmBlazor.Localizer["Sys.BatchDelete"]" ConfirmButtonColor="Color.Danger" />
+        }
+        
+        @if (IsAccessable("/api/Attendance2EventDeclared/Import") && string.IsNullOrEmpty(hiddenWTSearchPanel))
+        {
+            <TableToolbarButton TItem="Attendance2EventDeclared_View" Color="Color.Primary" Icon="fa fa-fw fa-upload" Text="@WtmBlazor.Localizer["Sys.Import"]" OnClickCallback="@OnImportClick" />
+        }
+        @if (IsAccessable("/api/Attendance2EventDeclared/ExportExcel"))
+        {
+            <TableToolbarButton TItem="Attendance2EventDeclared_View" Color="Color.Primary" Icon="fa fa-fw fa-download" Text="@WtmBlazor.Localizer["Sys.Export"]" OnClickCallback="@OnExportClick" IsAsync="true" />
+        }
+    </TableToolbarTemplate>
+    <RowButtonTemplate>
+        <div style="padding-right:10px;">
+            @if (IsAccessable("/api/Attendance2EventDeclared/Edit"))
+            {
+                <TableCellButton Size="Size.ExtraSmall" Color="Color.Success" Icon="fa fa-edit" Text="@WtmBlazor.Localizer["Sys.Edit"]" OnClick="() => OnEditClick(context)" />
+            }
+            @if (IsAccessable("/api/Attendance2EventDeclared/{id}"))
+            {
+                <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-info" Text="@WtmBlazor.Localizer["Sys.Details"]" OnClick="()=>OnDetailsClick(context)" />
+            }
+            @if (IsAccessable("/api/Attendance2EventDeclared/BatchDelete"))
+            {
+                <PopConfirmButton Icon="fa fa-trash" Text="@WtmBlazor.Localizer["Sys.Delete"]" OnConfirm="() => OnDeleteClick(context)" Color="Color.Danger" Size="Size.ExtraSmall"
+                                  Content="@WtmBlazor.Localizer["Sys.DeleteConfirm"]" CloseButtonText="@WtmBlazor.Localizer["Sys.Close"]" ConfirmButtonText="@WtmBlazor.Localizer["Sys.Delete"]" ConfirmButtonColor="Color.Danger" />
+            }
+        </div>
+    </RowButtonTemplate>
+</Table>
+<style>
+
+</style>
+
+@code{
+    [Parameter]
+    public bool isBTimeClick { get; set; }
+    [Parameter]
+    public string hiddenWTSearchPanel { get; set; }
+    [Parameter]
+    public VAttendanceReport record { get; set; }
+
+    private Attendance2EventDeclaredSearcher SearchModel = new Attendance2EventDeclaredSearcher();
+    private Table<Attendance2EventDeclared_View> EdataTable;
+
+    // private List<SelectedItem> AllAttendance2Records = new List<SelectedItem>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (record.ID > 0)
+        {
+            SearchModel.RecordId = record.ID;
+        }
+        //AllAttendance2Records = await WtmBlazor.Api.CallItemsApi("/api/Attendance2EventDeclared/GetAttendance2Records", placeholder: WtmBlazor.Localizer["Sys.All"]);
+
+        await base.OnInitializedAsync();
+    }
+
+    private async Task<QueryData<Attendance2EventDeclared_View>> OnSearch(QueryPageOptions opts)
+    {
+        return await StartSearch<Attendance2EventDeclared_View>("/api/Attendance2EventDeclared/Search", SearchModel, opts);
+    }
+
+    private void DoSearch()
+    {
+        EdataTable.QueryAsync();
+    }
+
+    private async Task OnCreateClick(IEnumerable<Attendance2EventDeclared_View> items)
+    {
+        var dialogResult = await OpenDialog<Create>(WtmBlazor.Localizer["Sys.Create"], x => x.isBTime == record.isBTimeClicked && x.record == record);
+
+        await EdataTable.QueryAsync();
+        StateHasChanged();
+    }
+
+    private async Task OnEditClick(Attendance2EventDeclared_View item)
+    {
+        item.RecordId = record.ID;
+        var dialogResult = await OpenDialog<Edit>(WtmBlazor.Localizer["Sys.Edit"], x => x.eventid == item.ID.ToString() && x.event_view== item && x.record == record);
+
+        await EdataTable.QueryAsync();
+        StateHasChanged();
+    }
+
+    private async Task OnDetailsClick(Attendance2EventDeclared_View item)
+    {
+        await OpenDialog<Details>(WtmBlazor.Localizer["Sys.Details"], x => x.id == item.ID.ToString());
+    }
+
+    private async Task OnBatchDeleteClick()
+    {
+        if (EdataTable.SelectedRows?.Any() == true)
+        {
+            await PostsData(EdataTable.SelectedRows.Select(x => x.ID).ToList(), $"/api/Attendance2EventDeclared/batchdelete", (s) => WtmBlazor.Localizer["Sys.BatchDeleteSuccess", s]);
+            await EdataTable.QueryAsync();
+        }
+        else
+        {
+            await WtmBlazor.Toast.Information(WtmBlazor.Localizer["Sys.Info"], WtmBlazor.Localizer["Sys.SelectOneRowMin"]);
+        }
+    }
+
+    private async Task OnDeleteClick(Attendance2EventDeclared_View item)
+    {
+        await PostsData(new List<string> { item.ID.ToString() }, $"/api/Attendance2EventDeclared/batchdelete", (s) => "Sys.OprationSuccess");
+        await EdataTable.QueryAsync();
+        CloseDialog(DialogResult.Yes);
+    }
+
+
+    private async Task OnExportClick(IEnumerable<Attendance2EventDeclared_View> items)
+    {
+        if (EdataTable.SelectedRows?.Any() == true)
+        {
+            await Download("/api/Attendance2EventDeclared/ExportExcelByIds", EdataTable.SelectedRows.Select(x => x.ID.ToString()).ToList());
+        }
+        else
+        {
+            await Download("/api/Attendance2EventDeclared/ExportExcel", SearchModel);
+        }
+    }
+    private async Task OnImportClick(IEnumerable<Attendance2EventDeclared_View> items)
+    {
+        if (await OpenDialog<Import>(WtmBlazor.Localizer["Sys.Import"]) == DialogResult.Yes)
+        {
+            await EdataTable.QueryAsync();
+        }
+    }
+}

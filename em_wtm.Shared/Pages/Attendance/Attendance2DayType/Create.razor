@@ -1,0 +1,40 @@
+﻿@page "/Attendance/Attendance2DayType/Create"
+@using em_wtm.ViewModel.Attendance.Attendance2DayTypeVMs;
+@inherits BasePage
+
+<ValidateForm @ref="vform" Model="@Model" OnValidSubmit="@Submit">
+    <Row ItemsPerRow="ItemsPerRow.Two" RowType="RowType.Normal">
+
+            <BootstrapInput @bind-Value="@Model.Entity.DayTypeName"  />
+            <BootstrapInput @bind-Value="@Model.Entity.DayTypeCaption"  />
+    </Row>
+    <div class="modal-footer table-modal-footer">
+        <Button Color="Color.Secondary" Icon="fa fa-close" Text="@WtmBlazor.Localizer["Sys.Close"]" OnClick="OnClose" />
+        <Button Color="Color.Primary" ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Create"]" IsAsync="true" />
+    </div>
+</ValidateForm>
+
+@code {
+
+    private Attendance2DayTypeVM Model = new Attendance2DayTypeVM();
+    private ValidateForm vform { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        await base.OnInitializedAsync();
+    }
+
+
+    private async Task Submit(EditContext context)
+    {
+        await PostsForm(vform, "/api/Attendance2DayType/add", (s) => "Sys.OprationSuccess");
+    }
+
+    public void OnClose()
+    {
+        CloseDialog();
+    }
+
+}

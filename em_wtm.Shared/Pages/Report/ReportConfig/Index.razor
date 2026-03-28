@@ -1,0 +1,63 @@
+﻿@page "/Report/ReportConfig/{ReportID:int}" 
+@*上面指定参数 param:type 指定参数数据类型。如果类型未指定，参数默认为string类型，页面在SetParametersAsync生命周期进入死循环，不能调用OnInitializedAsync，页面不显示。*@
+@using em_wtm.ViewModel.Report.ReportMainVMs;
+@inherits BasePage
+
+@attribute [TabItemOption(Text = "报表配置", Icon = "fa-solid fa-font-awesome")]
+
+
+<div><h1>编辑</h1></div>
+
+<Card IsCollapsible="true" HeaderText="编辑">
+    <BodyTemplate>
+        <em_wtm.Shared.Pages.Report.ReportMain.Edit id="@ReportID" />
+    </BodyTemplate>
+</Card>
+<Card IsCollapsible="true" HeaderText="脚本">
+    <BodyTemplate>
+        <em_wtm.Shared.Pages.Report.ReportScript.Index hiddenWTSearchPanel="hiddenWTSearchPanel" ReportID="@ReportID" />
+    </BodyTemplate>
+</Card>
+
+@*<Card IsCollapsible="true" HeaderText="参数">
+    <BodyTemplate>
+        <em_wtm.Shared.Pages.Report.ReportScriptParam.Index hiddenWTSearchPanel="hiddenWTSearchPanel" ScriptID="@id" />
+    </BodyTemplate>
+</Card>*@
+
+@code {
+    [Parameter]
+    public int ReportID { get; set; } 
+
+    [CascadingParameter]
+    private TabItem? TabItem { get; set; }
+
+    private string url { get; set; }
+    private ReportMainVM Model { get; set; }
+    private static string reportName;
+    protected override async Task OnInitializedAsync() {
+        var rv = await WtmBlazor.Api.CallAPI<ReportMainVM>($"/api/ReportMain/{ReportID}");
+        Model = rv.Data;
+        reportName = Model.Entity.Name;
+
+        TabItem?.SetHeader("设置-"+reportName);
+        await base.OnInitializedAsync();
+    }
+
+    public void OnClose() {
+        CloseDialog();
+    }
+    public override async Task SetParametersAsync(ParameterView parameters) {
+        //页面不显示，生命周期测试
+        string message;
+        if (parameters.TryGetValue<int>(nameof(ReportID), out var value)) {
+            if (value <=0) {//value is null
+                message = "The value of 'Param' is null.";
+            } else {
+                message = $"The value of 'Param' is {value}.";
+            }
+        }
+
+        await base.SetParametersAsync(parameters);
+    }
+}

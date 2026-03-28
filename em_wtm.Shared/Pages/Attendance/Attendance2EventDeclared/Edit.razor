@@ -1,0 +1,61 @@
+﻿@page "/Attendance/Attendance2EventDeclared/Edit/{id}"
+@using em_wtm.ViewModel.Attendance.Attendance2EventDeclaredVMs;
+@using em_wtm.Model._Business.Attendance;
+@inherits BasePage
+
+<ValidateForm @ref="vform" Model="@event_view" OnValidSubmit="@Submit">
+    <Row ItemsPerRow="ItemsPerRow.Two" RowType="RowType.Normal">
+        @*Model.Entity*@
+        <BootstrapInput @bind-Value="@event_view.EventDescription" />
+        <BootstrapInputNumber @bind-Value="@event_view.Fee" />
+        <BootstrapInput @bind-Value="@event_view.Memo" />
+        <BootstrapInput @bind-Value="@event_view.CheckMan" Readonly=true />
+        <BootstrapInput @bind-Value="@event_view.Manager" Readonly=true />
+@*<Select IsDisabled=true @bind-Value="@Model.Entity.RecordId" Items="@AllAttendance2Records" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]" />*@
+        <Display @bind-Value="@event_view.RecordId" />
+        <Switch IsDisabled=true @bind-Value="@event_view.IsBeginTime" />
+    </Row>
+    <div class="modal-footer table-modal-footer">
+        <Button Color="Color.Primary" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Close"]" OnClick="OnClose" />
+        <Button Color="Color.Primary" ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Edit"]" IsAsync="true" />
+    </div>
+</ValidateForm>
+
+@code {
+
+    private Attendance2EventDeclaredVM Model = new Attendance2EventDeclaredVM();
+    private ValidateForm vform { get; set; }
+    [Parameter]
+    public string eventid { get; set; }
+    [Parameter]
+    public VAttendanceReport record { get; set; }
+    [Parameter]
+    public Attendance2EventDeclared_View event_view { get; set; }
+
+    //private List<SelectedItem> AllAttendance2Records = new List<SelectedItem>();
+    protected override async Task OnInitializedAsync()
+    {
+
+        //AllAttendance2Records = await WtmBlazor.Api.CallItemsApi("/api/Attendance2EventDeclared/GetAttendance2Records", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        //var rv = await WtmBlazor.Api.CallAPI<Attendance2EventDeclaredVM>($"/api/Attendance2EventDeclared/{eventid}");
+        //Model = rv.Data;
+        event_view.Fee = event_view.IsBeginTime ? record.bOffsetFee : record.eOffsetFee;
+        //Model.Entity.Fee = Model.Entity.IsBeginTime ? record.bOffsetFee : record.eOffsetFee;
+        await base.OnInitializedAsync();
+    }
+
+    private async Task Submit(EditContext context)
+    {
+        Model.Entity = event_view;
+        vform.Model = Model;
+        //await PostsData(event_view, $"/api/Attendance2EventDeclared/edit", (s) => "Sys.OprationSuccess", method: HttpMethodEnum.PUT);
+        await PostsForm(vform, $"/api/Attendance2EventDeclared/edit", (s) => "Sys.OprationSuccess", method: HttpMethodEnum.PUT);
+        //CloseDialog(DialogResult.Yes);
+    }
+
+    public void OnClose() {
+        CloseDialog(DialogResult.Yes);
+    }
+
+}

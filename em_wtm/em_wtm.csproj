@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <CopyRefAssembliesToPublishDirectory>true</CopyRefAssembliesToPublishDirectory>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <AssemblyVersion>1.0.2023.0831</AssemblyVersion>
+    <FileVersion>1.0.2023.0831</FileVersion>
+  </PropertyGroup>
+
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="7.0.0" />
+    <PackageReference Include="WalkingTec.Mvvm.Mvc" Version="6.3.25" />
+	<ProjectReference Include="..\em_wtm.BLL\em_wtm.BLL.csproj" />
+   <ProjectReference Include="..\em_wtm.Client\em_wtm.Client.csproj" />
+   <ProjectReference Include="..\em_wtm.Shared\em_wtm.Shared.csproj" />
+    <ProjectReference Include="..\em_wtm.DataAccess\em_wtm.DataAccess.csproj" />
+</ItemGroup>
+</Project>
+

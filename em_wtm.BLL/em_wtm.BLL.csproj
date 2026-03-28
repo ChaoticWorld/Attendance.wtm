@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="BLL.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WalkingTec.Mvvm.Core" Version="6.3.25" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\em_wtm.Model\em_wtm.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="topsdk-netcore">
+      <HintPath>topsdk-netcore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,451 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0AC78E72-4B17-48E0-9AC7-1162E0EE9CD8}|em_wtm\\em_wtm.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{0AC78E72-4B17-48E0-9AC7-1162E0EE9CD8}|em_wtm\\em_wtm.csproj|solutionrelative:em_wtm\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0933DCDB-7EFF-4EC0-8D3E-28182B20216A}|em_wtm.BLL\\em_wtm.BLL.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.bll\\attendancebll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0933DCDB-7EFF-4EC0-8D3E-28182B20216A}|em_wtm.BLL\\em_wtm.BLL.csproj|solutionrelative:em_wtm.bll\\attendancebll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{023396CE-29B1-4B73-95EC-70ABAB495229}|em_wtm.DataAccess\\em_wtm.DataAccess.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.dataaccess\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{023396CE-29B1-4B73-95EC-70ABAB495229}|em_wtm.DataAccess\\em_wtm.DataAccess.csproj|solutionrelative:em_wtm.dataaccess\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0BC08ED0-C418-401D-867C-A195E0B8033A}|em_wtm.Model\\em_wtm.Model.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.model\\_business\\attendance\\attendance2daytype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0BC08ED0-C418-401D-867C-A195E0B8033A}|em_wtm.Model\\em_wtm.Model.csproj|solutionrelative:em_wtm.model\\_business\\attendance\\attendance2daytype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0933DCDB-7EFF-4EC0-8D3E-28182B20216A}|em_wtm.BLL\\em_wtm.BLL.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.bll\\em_wtm.bll.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{0933DCDB-7EFF-4EC0-8D3E-28182B20216A}|em_wtm.BLL\\em_wtm.BLL.csproj|solutionrelative:em_wtm.bll\\em_wtm.bll.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.shared\\pages\\attendance\\vattendancereport\\printview.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|solutionrelative:em_wtm.shared\\pages\\attendance\\vattendancereport\\printview.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.shared\\pages\\attendance\\vattendancereport\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|solutionrelative:em_wtm.shared\\pages\\attendance\\vattendancereport\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0AC78E72-4B17-48E0-9AC7-1162E0EE9CD8}|em_wtm\\em_wtm.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm\\areas\\attendance\\controllers\\vattendancereportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0AC78E72-4B17-48E0-9AC7-1162E0EE9CD8}|em_wtm\\em_wtm.csproj|solutionrelative:em_wtm\\areas\\attendance\\controllers\\vattendancereportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0BC08ED0-C418-401D-867C-A195E0B8033A}|em_wtm.Model\\em_wtm.Model.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.model\\_business\\report\\reportmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0BC08ED0-C418-401D-867C-A195E0B8033A}|em_wtm.Model\\em_wtm.Model.csproj|solutionrelative:em_wtm.model\\_business\\report\\reportmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0933DCDB-7EFF-4EC0-8D3E-28182B20216A}|em_wtm.BLL\\em_wtm.BLL.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.bll\\clshelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0933DCDB-7EFF-4EC0-8D3E-28182B20216A}|em_wtm.BLL\\em_wtm.BLL.csproj|solutionrelative:em_wtm.bll\\clshelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.shared\\pages\\attendance\\attendance2plantime\\create.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|solutionrelative:em_wtm.shared\\pages\\attendance\\attendance2plantime\\create.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.shared\\pages\\attendance\\attendance2plantime\\edit.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|solutionrelative:em_wtm.shared\\pages\\attendance\\attendance2plantime\\edit.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.shared\\pages\\attendance\\attendance2plantime\\details.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|solutionrelative:em_wtm.shared\\pages\\attendance\\attendance2plantime\\details.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.shared\\pages\\attendance\\attendance2holiday\\create.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|solutionrelative:em_wtm.shared\\pages\\attendance\\attendance2holiday\\create.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.shared\\pages\\attendance\\attendance2employeerefschemeclass\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|solutionrelative:em_wtm.shared\\pages\\attendance\\attendance2employeerefschemeclass\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.shared\\pages\\attendance\\attendance2holiday\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|solutionrelative:em_wtm.shared\\pages\\attendance\\attendance2holiday\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.shared\\pages\\attendance\\attendance2plantime\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|solutionrelative:em_wtm.shared\\pages\\attendance\\attendance2plantime\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0BC08ED0-C418-401D-867C-A195E0B8033A}|em_wtm.Model\\em_wtm.Model.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.model\\_business\\attendance\\attendance2plantime.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0BC08ED0-C418-401D-867C-A195E0B8033A}|em_wtm.Model\\em_wtm.Model.csproj|solutionrelative:em_wtm.model\\_business\\attendance\\attendance2plantime.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B33406B1-43FF-45E9-BB86-947D6B09701D}|em_wtm.ViewModel\\em_wtm.ViewModel.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.viewmodel\\attendance\\attendance2plantimevms\\attendance2plantimelistvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B33406B1-43FF-45E9-BB86-947D6B09701D}|em_wtm.ViewModel\\em_wtm.ViewModel.csproj|solutionrelative:em_wtm.viewmodel\\attendance\\attendance2plantimevms\\attendance2plantimelistvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0AC78E72-4B17-48E0-9AC7-1162E0EE9CD8}|em_wtm\\em_wtm.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm\\areas\\attendance\\controllers\\attendance2plantimecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0AC78E72-4B17-48E0-9AC7-1162E0EE9CD8}|em_wtm\\em_wtm.csproj|solutionrelative:em_wtm\\areas\\attendance\\controllers\\attendance2plantimecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.shared\\wtmblazorutils\\basepage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|solutionrelative:em_wtm.shared\\wtmblazorutils\\basepage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0BC08ED0-C418-401D-867C-A195E0B8033A}|em_wtm.Model\\em_wtm.Model.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.model\\_business\\attendance\\attendance2holiday.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0BC08ED0-C418-401D-867C-A195E0B8033A}|em_wtm.Model\\em_wtm.Model.csproj|solutionrelative:em_wtm.model\\_business\\attendance\\attendance2holiday.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0BC08ED0-C418-401D-867C-A195E0B8033A}|em_wtm.Model\\em_wtm.Model.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.model\\_business\\attendance\\attendance2employeerefschemeclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0BC08ED0-C418-401D-867C-A195E0B8033A}|em_wtm.Model\\em_wtm.Model.csproj|solutionrelative:em_wtm.model\\_business\\attendance\\attendance2employeerefschemeclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B33406B1-43FF-45E9-BB86-947D6B09701D}|em_wtm.ViewModel\\em_wtm.ViewModel.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.viewmodel\\attendance\\attendance2employeerefschemeclassvms\\attendance2employeerefschemeclassvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B33406B1-43FF-45E9-BB86-947D6B09701D}|em_wtm.ViewModel\\em_wtm.ViewModel.csproj|solutionrelative:em_wtm.viewmodel\\attendance\\attendance2employeerefschemeclassvms\\attendance2employeerefschemeclassvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0AC78E72-4B17-48E0-9AC7-1162E0EE9CD8}|em_wtm\\em_wtm.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm\\areas\\report\\controllers\\reportmaincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0AC78E72-4B17-48E0-9AC7-1162E0EE9CD8}|em_wtm\\em_wtm.csproj|solutionrelative:em_wtm\\areas\\report\\controllers\\reportmaincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|d:\\code\\sync\\coding\\em_wtm_plus_1.7\\em_wtm.shared\\pages\\report\\reportscript\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{97694CA8-2F8A-4850-8E0E-DED1816DD977}|em_wtm.Shared\\em_wtm.Shared.csproj|solutionrelative:em_wtm.shared\\pages\\report\\reportscript\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Attendance2DayType.cs",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Model\\_Business\\Attendance\\Attendance2DayType.cs",
+              "RelativeDocumentMoniker": "em_wtm.Model\\_Business\\Attendance\\Attendance2DayType.cs",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Model\\_Business\\Attendance\\Attendance2DayType.cs",
+              "RelativeToolTip": "em_wtm.Model\\_Business\\Attendance\\Attendance2DayType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-23T09:07:04.172Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PrintView.razor",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\VAttendanceReport\\PrintView.razor",
+              "RelativeDocumentMoniker": "em_wtm.Shared\\Pages\\Attendance\\VAttendanceReport\\PrintView.razor",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\VAttendanceReport\\PrintView.razor",
+              "RelativeToolTip": "em_wtm.Shared\\Pages\\Attendance\\VAttendanceReport\\PrintView.razor",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAAEQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-04T04:34:31.302Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Index.razor",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\VAttendanceReport\\Index.razor",
+              "RelativeDocumentMoniker": "em_wtm.Shared\\Pages\\Attendance\\VAttendanceReport\\Index.razor",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\VAttendanceReport\\Index.razor",
+              "RelativeToolTip": "em_wtm.Shared\\Pages\\Attendance\\VAttendanceReport\\Index.razor",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAAB4AAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-29T01:19:59.71Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "VAttendanceReportController.cs",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm\\Areas\\Attendance\\Controllers\\VAttendanceReportController.cs",
+              "RelativeDocumentMoniker": "em_wtm\\Areas\\Attendance\\Controllers\\VAttendanceReportController.cs",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm\\Areas\\Attendance\\Controllers\\VAttendanceReportController.cs",
+              "RelativeToolTip": "em_wtm\\Areas\\Attendance\\Controllers\\VAttendanceReportController.cs",
+              "ViewState": "AQIAAOAAAAAAAAAAAAAgwOgAAAA2AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-29T01:19:59.72Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AttendanceBLL.cs",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.BLL\\AttendanceBLL.cs",
+              "RelativeDocumentMoniker": "em_wtm.BLL\\AttendanceBLL.cs",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.BLL\\AttendanceBLL.cs",
+              "RelativeToolTip": "em_wtm.BLL\\AttendanceBLL.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAnwDMAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-29T01:19:59.724Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm\\appsettings.json",
+              "RelativeDocumentMoniker": "em_wtm\\appsettings.json",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm\\appsettings.json",
+              "RelativeToolTip": "em_wtm\\appsettings.json",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAB0AAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-09-29T01:19:59.446Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DataContext.cs",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.DataAccess\\DataContext.cs",
+              "RelativeDocumentMoniker": "em_wtm.DataAccess\\DataContext.cs",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.DataAccess\\DataContext.cs",
+              "RelativeToolTip": "em_wtm.DataAccess\\DataContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-29T01:19:59.728Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "em_wtm.BLL.csproj",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.BLL\\em_wtm.BLL.csproj",
+              "RelativeDocumentMoniker": "em_wtm.BLL\\em_wtm.BLL.csproj",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.BLL\\em_wtm.BLL.csproj",
+              "RelativeToolTip": "em_wtm.BLL\\em_wtm.BLL.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-09-29T01:19:59.742Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "clsHelper.cs",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.BLL\\clsHelper.cs",
+              "RelativeDocumentMoniker": "em_wtm.BLL\\clsHelper.cs",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.BLL\\clsHelper.cs",
+              "RelativeToolTip": "em_wtm.BLL\\clsHelper.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAAwBwAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-29T01:19:59.731Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ReportMain.cs",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Model\\_Business\\Report\\ReportMain.cs",
+              "RelativeDocumentMoniker": "em_wtm.Model\\_Business\\Report\\ReportMain.cs",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Model\\_Business\\Report\\ReportMain.cs",
+              "RelativeToolTip": "em_wtm.Model\\_Business\\Report\\ReportMain.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABcAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-29T01:20:00.131Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Edit.razor",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\Attendance2PlanTime\\Edit.razor",
+              "RelativeDocumentMoniker": "em_wtm.Shared\\Pages\\Attendance\\Attendance2PlanTime\\Edit.razor",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\Attendance2PlanTime\\Edit.razor",
+              "RelativeToolTip": "em_wtm.Shared\\Pages\\Attendance\\Attendance2PlanTime\\Edit.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-29T01:20:00.136Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Details.razor",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\Attendance2PlanTime\\Details.razor",
+              "RelativeDocumentMoniker": "em_wtm.Shared\\Pages\\Attendance\\Attendance2PlanTime\\Details.razor",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\Attendance2PlanTime\\Details.razor",
+              "RelativeToolTip": "em_wtm.Shared\\Pages\\Attendance\\Attendance2PlanTime\\Details.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAABAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-29T01:20:00.14Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Create.razor",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\Attendance2PlanTime\\Create.razor",
+              "RelativeDocumentMoniker": "em_wtm.Shared\\Pages\\Attendance\\Attendance2PlanTime\\Create.razor",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\Attendance2PlanTime\\Create.razor",
+              "RelativeToolTip": "em_wtm.Shared\\Pages\\Attendance\\Attendance2PlanTime\\Create.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-29T01:20:00.144Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Create.razor",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\Attendance2Holiday\\Create.razor",
+              "RelativeDocumentMoniker": "em_wtm.Shared\\Pages\\Attendance\\Attendance2Holiday\\Create.razor",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\Attendance2Holiday\\Create.razor",
+              "RelativeToolTip": "em_wtm.Shared\\Pages\\Attendance\\Attendance2Holiday\\Create.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-29T01:20:00.148Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Index.razor",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\Attendance2EmployeeRefSchemeClass\\Index.razor",
+              "RelativeDocumentMoniker": "em_wtm.Shared\\Pages\\Attendance\\Attendance2EmployeeRefSchemeClass\\Index.razor",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\Attendance2EmployeeRefSchemeClass\\Index.razor",
+              "RelativeToolTip": "em_wtm.Shared\\Pages\\Attendance\\Attendance2EmployeeRefSchemeClass\\Index.razor",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABsAAABQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-29T01:20:00.152Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Index.razor",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\Attendance2Holiday\\Index.razor",
+              "RelativeDocumentMoniker": "em_wtm.Shared\\Pages\\Attendance\\Attendance2Holiday\\Index.razor",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\Attendance2Holiday\\Index.razor",
+              "RelativeToolTip": "em_wtm.Shared\\Pages\\Attendance\\Attendance2Holiday\\Index.razor",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABcAAABKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-29T01:20:00.156Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Index.razor",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\Attendance2PlanTime\\Index.razor",
+              "RelativeDocumentMoniker": "em_wtm.Shared\\Pages\\Attendance\\Attendance2PlanTime\\Index.razor",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Attendance\\Attendance2PlanTime\\Index.razor",
+              "RelativeToolTip": "em_wtm.Shared\\Pages\\Attendance\\Attendance2PlanTime\\Index.razor",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAABYAAAA0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-29T01:20:00.159Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Attendance2PlanTimeListVM.cs",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.ViewModel\\Attendance\\Attendance2PlanTimeVMs\\Attendance2PlanTimeListVM.cs",
+              "RelativeDocumentMoniker": "em_wtm.ViewModel\\Attendance\\Attendance2PlanTimeVMs\\Attendance2PlanTimeListVM.cs",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.ViewModel\\Attendance\\Attendance2PlanTimeVMs\\Attendance2PlanTimeListVM.cs",
+              "RelativeToolTip": "em_wtm.ViewModel\\Attendance\\Attendance2PlanTimeVMs\\Attendance2PlanTimeListVM.cs",
+              "ViewState": "AQIAABMAAAAAAAAAAAAQwA4AAAA/AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-29T01:20:00.163Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Attendance2PlanTimeController.cs",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm\\Areas\\Attendance\\Controllers\\Attendance2PlanTimeController.cs",
+              "RelativeDocumentMoniker": "em_wtm\\Areas\\Attendance\\Controllers\\Attendance2PlanTimeController.cs",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm\\Areas\\Attendance\\Controllers\\Attendance2PlanTimeController.cs",
+              "RelativeToolTip": "em_wtm\\Areas\\Attendance\\Controllers\\Attendance2PlanTimeController.cs",
+              "ViewState": "AQIAABEAAAAAAAAAAAAwwBoAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-29T01:20:00.169Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Attendance2PlanTime.cs",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Model\\_Business\\Attendance\\Attendance2PlanTime.cs",
+              "RelativeDocumentMoniker": "em_wtm.Model\\_Business\\Attendance\\Attendance2PlanTime.cs",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Model\\_Business\\Attendance\\Attendance2PlanTime.cs",
+              "RelativeToolTip": "em_wtm.Model\\_Business\\Attendance\\Attendance2PlanTime.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADgAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-29T01:20:00.173Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "BasePage.cs",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\WtmBlazorUtils\\BasePage.cs",
+              "RelativeDocumentMoniker": "em_wtm.Shared\\WtmBlazorUtils\\BasePage.cs",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\WtmBlazorUtils\\BasePage.cs",
+              "RelativeToolTip": "em_wtm.Shared\\WtmBlazorUtils\\BasePage.cs",
+              "ViewState": "AQIAAIgAAAAAAAAAAAAAAJgAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-29T01:20:00.177Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Attendance2Holiday.cs",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Model\\_Business\\Attendance\\Attendance2Holiday.cs",
+              "RelativeDocumentMoniker": "em_wtm.Model\\_Business\\Attendance\\Attendance2Holiday.cs",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Model\\_Business\\Attendance\\Attendance2Holiday.cs",
+              "RelativeToolTip": "em_wtm.Model\\_Business\\Attendance\\Attendance2Holiday.cs",
+              "ViewState": "AQIAAC4AAAAAAAAAAAAYwDgAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-29T01:20:00.182Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Attendance2EmployeeRefSchemeClass.cs",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Model\\_Business\\Attendance\\Attendance2EmployeeRefSchemeClass.cs",
+              "RelativeDocumentMoniker": "em_wtm.Model\\_Business\\Attendance\\Attendance2EmployeeRefSchemeClass.cs",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Model\\_Business\\Attendance\\Attendance2EmployeeRefSchemeClass.cs",
+              "RelativeToolTip": "em_wtm.Model\\_Business\\Attendance\\Attendance2EmployeeRefSchemeClass.cs",
+              "ViewState": "AQIAADcAAAAAAAAAAAAYwEMAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-29T01:20:00.185Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Attendance2EmployeeRefSchemeClassVM.cs",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.ViewModel\\Attendance\\Attendance2EmployeeRefSchemeClassVMs\\Attendance2EmployeeRefSchemeClassVM.cs",
+              "RelativeDocumentMoniker": "em_wtm.ViewModel\\Attendance\\Attendance2EmployeeRefSchemeClassVMs\\Attendance2EmployeeRefSchemeClassVM.cs",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.ViewModel\\Attendance\\Attendance2EmployeeRefSchemeClassVMs\\Attendance2EmployeeRefSchemeClassVM.cs",
+              "RelativeToolTip": "em_wtm.ViewModel\\Attendance\\Attendance2EmployeeRefSchemeClassVMs\\Attendance2EmployeeRefSchemeClassVM.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-29T01:20:00.19Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "ReportMainController.cs",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm\\Areas\\Report\\Controllers\\ReportMainController.cs",
+              "RelativeDocumentMoniker": "em_wtm\\Areas\\Report\\Controllers\\ReportMainController.cs",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm\\Areas\\Report\\Controllers\\ReportMainController.cs",
+              "RelativeToolTip": "em_wtm\\Areas\\Report\\Controllers\\ReportMainController.cs",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAgwCoAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-29T01:20:00.195Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Index.razor",
+              "DocumentMoniker": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Report\\ReportScript\\Index.razor",
+              "RelativeDocumentMoniker": "em_wtm.Shared\\Pages\\Report\\ReportScript\\Index.razor",
+              "ToolTip": "D:\\Code\\Sync\\Coding\\em_wtm_plus_1.7\\em_wtm.Shared\\Pages\\Report\\ReportScript\\Index.razor",
+              "RelativeToolTip": "em_wtm.Shared\\Pages\\Report\\ReportScript\\Index.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAACYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-29T01:20:00.2Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

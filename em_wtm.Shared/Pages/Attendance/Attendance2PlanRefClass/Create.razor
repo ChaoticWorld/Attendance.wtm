@@ -1,0 +1,50 @@
+﻿@page "/Attendance/Attendance2PlanRefClass/Create"
+@using em_wtm.ViewModel.Attendance.Attendance2PlanRefClassVMs;
+@inherits BasePage
+
+<ValidateForm @ref="vform" Model="@Model" OnValidSubmit="@Submit">
+    <Row ItemsPerRow="ItemsPerRow.Two" RowType="RowType.Normal">
+
+            <BootstrapInputNumber @bind-Value="@Model.Entity.ID"  />
+            <Select @bind-Value="@Model.Entity.ClassId" Items="@AllAttendance2SchemeClasss" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]"/>
+            <Select @bind-Value="@Model.Entity.PlanId" Items="@AllAttendance2PlanTimes" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]"/>
+            <BootstrapInputNumber @bind-Value="@Model.Entity.PeriodNo"  />
+    </Row>
+    <div class="modal-footer table-modal-footer">
+        <Button Color="Color.Secondary" Icon="fa fa-close" Text="@WtmBlazor.Localizer["Sys.Close"]" OnClick="OnClose" />
+        <Button Color="Color.Primary" ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Create"]" IsAsync="true" />
+    </div>
+</ValidateForm>
+
+@code {
+
+    private Attendance2PlanRefClassVM Model = new Attendance2PlanRefClassVM();
+    private ValidateForm vform { get; set; }
+
+    private List<SelectedItem> AllAttendance2SchemeClasss = new List<SelectedItem>();
+
+    private List<SelectedItem> AllAttendance2PlanTimes = new List<SelectedItem>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        AllAttendance2SchemeClasss = await WtmBlazor.Api.CallItemsApi("/api/Attendance2PlanRefClass/GetAttendance2SchemeClasss", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        AllAttendance2PlanTimes = await WtmBlazor.Api.CallItemsApi("/api/Attendance2PlanRefClass/GetAttendance2PlanTimes", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        await base.OnInitializedAsync();
+    }
+
+
+    private async Task Submit(EditContext context)
+    {
+        await PostsForm(vform, "/api/Attendance2PlanRefClass/add", (s) => "Sys.OprationSuccess");
+    }
+
+    public void OnClose()
+    {
+        CloseDialog();
+    }
+
+}

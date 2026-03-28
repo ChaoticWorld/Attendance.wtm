@@ -1,0 +1,45 @@
+﻿@page "/Attendance/Attendance2EventDeclared/Details/{id}"
+@using em_wtm.ViewModel.Attendance.Attendance2EventDeclaredVMs;
+@inherits BasePage
+
+<ValidateForm @ref="vform" Model="@Model" >
+    <Row ItemsPerRow="ItemsPerRow.Two" RowType="RowType.Normal">
+
+            <Display @bind-Value="@Model.Entity.EventDescription"   ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.Fee"   ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.Memo"   ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.CheckMan"   ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.Manager"   ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.RecordId" Lookup="@AllAttendance2Records"  ShowLabel="true"/>
+            <Switch @bind-Value="@Model.Entity.IsBeginTime"  IsDisabled="true" ShowLabel="true"/>
+    </Row>
+    <div class="modal-footer table-modal-footer">
+        <Button Color="Color.Primary" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Close"]" OnClick="OnClose" />
+    </div>
+</ValidateForm>
+
+@code {
+
+    private Attendance2EventDeclaredVM Model = null;
+    private ValidateForm vform { get; set; }
+    [Parameter]
+    public string id { get; set; }
+
+    private List<SelectedItem> AllAttendance2Records = new List<SelectedItem>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        AllAttendance2Records = await WtmBlazor.Api.CallItemsApi("/api/Attendance2EventDeclared/GetAttendance2Records", placeholder: WtmBlazor.Localizer["Sys.All"]);
+
+        var rv = await WtmBlazor.Api.CallAPI<Attendance2EventDeclaredVM>($"/api/Attendance2EventDeclared/{id}");
+        Model = rv.Data;
+    }
+
+    public void OnClose()
+    {
+        CloseDialog();
+    }
+
+}

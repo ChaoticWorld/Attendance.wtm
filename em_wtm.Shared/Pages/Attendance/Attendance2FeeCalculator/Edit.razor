@@ -1,0 +1,49 @@
+﻿@page "/Attendance/Attendance2FeeCalculator/Edit/{id}"
+@using em_wtm.ViewModel.Attendance.Attendance2FeeCalculatorVMs;
+@inherits BasePage
+
+<ValidateForm @ref="vform" Model="@Model" OnValidSubmit="@Submit">
+    <Row ItemsPerRow="ItemsPerRow.Two" RowType="RowType.Normal">
+
+            <Select @bind-Value="@Model.Entity.DayTypeId" Items="@AllAttendance2DayTypes" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]"/>
+            <BootstrapInputNumber @bind-Value="@Model.Entity.RangeA"  />
+            <BootstrapInputNumber @bind-Value="@Model.Entity.RangeB"  />
+            <BootstrapInputNumber @bind-Value="@Model.Entity.RangePrice"  />
+    </Row>
+    <div class="modal-footer table-modal-footer">
+        <Button Color="Color.Primary" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Close"]" OnClick="OnClose" />
+        <Button Color="Color.Primary" ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Edit"]" IsAsync="true" />
+    </div>
+</ValidateForm>
+
+@code {
+
+    private Attendance2FeeCalculatorVM Model = null;
+    private ValidateForm vform { get; set; }
+    [Parameter]
+    public string id { get; set; }
+
+    private List<SelectedItem> AllAttendance2DayTypes = new List<SelectedItem>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        AllAttendance2DayTypes = await WtmBlazor.Api.CallItemsApi("/api/Attendance2FeeCalculator/GetAttendance2DayTypes", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        var rv = await WtmBlazor.Api.CallAPI<Attendance2FeeCalculatorVM>($"/api/Attendance2FeeCalculator/{id}");
+        Model = rv.Data;
+         await base.OnInitializedAsync();
+   }
+
+    private async Task Submit(EditContext context)
+    {
+        await PostsForm(vform, $"/api/Attendance2FeeCalculator/edit", (s) => "Sys.OprationSuccess", method: HttpMethodEnum.PUT);
+    }
+
+    public void OnClose()
+    {
+        CloseDialog();
+    }
+
+}

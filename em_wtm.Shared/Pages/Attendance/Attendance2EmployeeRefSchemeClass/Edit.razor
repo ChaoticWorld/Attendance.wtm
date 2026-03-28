@@ -1,0 +1,57 @@
+﻿@page "/Attendance/Attendance2EmployeeRefSchemeClass/Edit/{id}"
+@using em_wtm.ViewModel.Attendance.Attendance2EmployeeRefSchemeClassVMs;
+@inherits BasePage
+
+<ValidateForm @ref="vform" Model="@Model" OnValidSubmit="@Submit">
+    <Row ItemsPerRow="ItemsPerRow.Two" RowType="RowType.Normal">
+
+            <BootstrapInputNumber @bind-Value="@Model.Entity.ID"  />
+            <Select @bind-Value="@Model.Entity.UserId" Items="@AllFrameworkUsers" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]"/>
+            <BootstrapInputNumber @bind-Value="@Model.Entity.EmployeeId"  />
+            <Select @bind-Value="@Model.Entity.ClassId" Items="@AllAttendance2SchemeClasss" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]"/>
+            <DateTimePicker @bind-Value="@Model.Entity.EffDate"  />
+            <BootstrapInputNumber @bind-Value="@Model.Entity.PeriodNo"  />
+            <DateTimePicker @bind-Value="@Model.Entity.ExpDate"  />
+            <BootstrapInput @bind-Value="@Model.Entity.EmployeeName"  />
+    </Row>
+    <div class="modal-footer table-modal-footer">
+        <Button Color="Color.Primary" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Close"]" OnClick="OnClose" />
+        <Button Color="Color.Primary" ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Edit"]" IsAsync="true" />
+    </div>
+</ValidateForm>
+
+@code {
+
+    private Attendance2EmployeeRefSchemeClassVM Model = null;
+    private ValidateForm vform { get; set; }
+    [Parameter]
+    public string id { get; set; }
+
+    private List<SelectedItem> AllFrameworkUsers = new List<SelectedItem>();
+
+    private List<SelectedItem> AllAttendance2SchemeClasss = new List<SelectedItem>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        AllFrameworkUsers = await WtmBlazor.Api.CallItemsApi("/api/Attendance2EmployeeRefSchemeClass/GetFrameworkUsers", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        AllAttendance2SchemeClasss = await WtmBlazor.Api.CallItemsApi("/api/Attendance2EmployeeRefSchemeClass/GetAttendance2SchemeClasss", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        var rv = await WtmBlazor.Api.CallAPI<Attendance2EmployeeRefSchemeClassVM>($"/api/Attendance2EmployeeRefSchemeClass/{id}");
+        Model = rv.Data;
+         await base.OnInitializedAsync();
+   }
+
+    private async Task Submit(EditContext context)
+    {
+        await PostsForm(vform, $"/api/Attendance2EmployeeRefSchemeClass/edit", (s) => "Sys.OprationSuccess", method: HttpMethodEnum.PUT);
+    }
+
+    public void OnClose()
+    {
+        CloseDialog();
+    }
+
+}

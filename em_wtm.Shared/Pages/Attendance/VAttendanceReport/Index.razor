@@ -1,0 +1,346 @@
+﻿@page "/Attendance/VAttendanceReport"
+@using em_wtm.ViewModel.Attendance.VAttendanceReportVMs;
+@using em_wtm.Model._Business.Attendance;
+@inject PrintService PrintService;
+@inject DialogService dialogService;
+@inherits BasePage
+@attribute [ActionDescription("考勤报表", "em_wtm.Controllers,VAttendanceReport")]
+
+<WTSearchPanel OnSearch="@DoSearch">
+    <ValidateForm Model="@SearchModel">
+        <Row ItemsPerRow="ItemsPerRow.Two" RowType="RowType.Inline">
+            <Select @bind-Value="@SearchModel.EmployeeId" Items="@AllVAttendanceEmployees" PlaceHolder="@WtmBlazor.Localizer["Sys.All"]"/>
+            <WTDateRange @bind-Value="@SearchModel.SDate" />
+        </Row>
+    </ValidateForm>
+</WTSearchPanel>
+
+<Table @ref="dataTable" TItem="VAttendanceReport_View" OnQueryAsync="OnSearch" IsPagination="false" PageItems=32 IsStriped="true" IsBordered="true" ShowRefresh="true" 
+       ShowToolbar="true" ShowFilterHeader="true"  IsMultipleSelect="false" ShowExtendButtons="false" ShowDefaultButtons="false" ShowExtendEditButton="false" ShowExtendDeleteButton="false" style="margin-top:10px;">
+    <TableColumns>
+        <TableColumn @bind-Field="@context.SDate" Sortable=true FormatString="dd" Width=20 />
+        <TableColumn @bind-Field="@context.Description" Width=74 />
+        <TableColumn @bind-Field="@context.BAttTime" FormatString="hh\:mm" Width=60 />
+        <TableColumn @bind-Field="@context.BOffset" Width=35 >
+            <Template Context="value">
+                <LinkButton ButtonType=ButtonType.Button Text="@value.Value.ToString()" OnClick="() => OffsetClick(value.Row,true)" Color=@(value.Value<0?Color.Danger:Color.Success) />
+            </Template>
+        </TableColumn>
+        <TableColumn @bind-Field="@context.EAttTime" FormatString="hh\:mm" Width=60 />
+        <TableColumn @bind-Field="@context.EOffset" Width=35 >
+            <Template Context="value">
+                <LinkButton ButtonType=ButtonType.Button Text="@value.Value.ToString()" OnClick="() => OffsetClick(value.Row,false)" Color=@(value.Value<0?Color.Danger:Color.Success) />
+            </Template>
+        </TableColumn>
+        <TableColumn @bind-Field="@context.Event" TextWrap=true Width=240 />
+        <TableColumn @bind-Field="@context.Fee" Width=35 />
+        <TableColumn @bind-Field="@context.bOffsetFee" Visible=false />
+        <TableColumn @bind-Field="@context.eOffsetFee" Visible=false />
+    </TableColumns>
+    <TableToolbarTemplate>
+        @if (IsAccessable("/api/VAttendanceReport/IsAttendanceManageRole")) {
+            <TableToolbarButton TItem="VAttendanceReport_View" Color="Color.Success" Icon="fa fa-fw fa-plus" Text="@WtmBlazor.Localizer["Sys.ImportAttendanceAllEmployee"]" OnClickCallback="@OnImportAttendanceAllEmployeeClick" />
+        }
+        @if (IsAccessable("/api/VAttendanceReport/ImportFromDevice")) {
+            <TableToolbarButton TItem="VAttendanceReport_View" Color="Color.Primary" Icon="fa fa-fw fa-plus" Text="@WtmBlazor.Localizer["Sys.ImportAttendance"]" OnClickCallback="@OnImportAttendanceClick" />
+        }
+            <TableToolbarButton TItem="VAttendanceReport_View" Color="Color.Primary" Icon="fa fa-fw fa-print" Text="@WtmBlazor.Localizer["Sys.Print"]" OnClickCallback="@OnPrintClick" />
+
+        @if (IsAccessable("/api/VAttendanceReport/ExportExcel"))
+        {
+            <TableToolbarButton TItem="VAttendanceReport_View" Color="Color.Primary" Icon="fa fa-fw fa-download" Text="@WtmBlazor.Localizer["Sys.Export"]" OnClickCallback="@OnExportClick" IsAsync="true" />
+        }
+        <Progress @bind-Value="@progressValue" IsShowValue="true" Round="2" class="@cssDisplay"></Progress>
+
+    </TableToolbarTemplate>
+  
+</Table>
+<style>
+    .noDisplay{display:none}
+    .Display{display:block}
+</style>
+
+@code{
+
+    private VAttendanceReportSearcher SearchModel = new VAttendanceReportSearcher();
+    private Table<VAttendanceReport_View> dataTable;
+    private string cssDisplay = "noDisplay";
+    private int progressValue { get; set; } = 0;
+    private List<SelectedItem> AllVAttendanceEmployees = new List<SelectedItem>();
+    private bool recordIsClose = false;
+
+
+
+    private bool isAM {
+        get { return IsAttendanceManageRole().Result; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //初始化考勤查询日期
+        DateTime attDateEnd, attDateStart;
+        attDateStart = DateTime.Now.Date;
+        attDateEnd = attDateStart.AddSeconds(1);
+        if (DateTime.Now.Day < 10) { 
+            attDateStart = attDateStart.AddDays(1 - DateTime.Now.Day).AddMonths(-1); 
+            attDateEnd = attDateStart.AddMonths(1).AddDays(-1).AddSeconds(1);
+        }
+        else attDateStart = attDateStart.AddDays(1 - DateTime.Now.Day);
+
+        SearchModel.SDate = new DateRange(attDateStart,attDateEnd);
+        AllVAttendanceEmployees = await WtmBlazor.Api.CallItemsApi("/api/VAttendanceReport/GetVAttendanceEmployees", placeholder: WtmBlazor.Localizer["Sys.All"]);
+        SearchModel.EmployeeId = await GetLoginUserAttendanceEmployeeID();
+
+        await base.OnInitializedAsync();
+    }
+
+    private VAttendanceEmployee getAttendanceEmployee(int empId)
+    {
+        VAttendanceEmployee loginEmployee = new VAttendanceEmployee();
+        loginEmployee.EmployeeName = AllVAttendanceEmployees.FirstOrDefault(f => f.Value == empId.ToString(), null)?.Text;
+        loginEmployee.ID = SearchModel.EmployeeId.Value;
+        return loginEmployee.ID > 0 ? loginEmployee : null;
+    }
+    private async Task<QueryData<VAttendanceReport_View>> OnSearch(QueryPageOptions opts)
+    {
+        SearchModel.EmployeeId = SearchModel.EmployeeId.HasValue ? SearchModel.EmployeeId : await GetLoginUserAttendanceEmployeeID();
+        return await StartSearch<VAttendanceReport_View>("/api/VAttendanceReport/Search", SearchModel, opts);
+    }
+
+    private void DoSearch()
+    {
+        dataTable.QueryAsync();
+    }
+
+    private async Task OnCreateClick(IEnumerable<VAttendanceReport_View> items)
+    {
+        if (await OpenDialog<Create>(WtmBlazor.Localizer["Sys.Create"]) == DialogResult.Yes)
+        {
+            await dataTable.QueryAsync();
+        }
+    }
+
+    private async Task OnEditClick(VAttendanceReport_View item)
+    {
+        if (await OpenDialog<Edit>(WtmBlazor.Localizer["Sys.Edit"], x => x.id == item.ID.ToString()) == DialogResult.Yes)
+        {
+            await dataTable.QueryAsync();
+        }
+    }
+
+    private async Task OnDetailsClick(VAttendanceReport_View item)
+    {
+        await OpenDialog<Details>(WtmBlazor.Localizer["Sys.Details"], x => x.id == item.ID.ToString());
+    }
+
+    private async Task OnBatchDeleteClick()
+    {
+        if (dataTable.SelectedRows?.Any() == true)
+        {
+            await PostsData(dataTable.SelectedRows.Select(x => x.ID).ToList(), $"/api/VAttendanceReport/batchdelete", (s) => WtmBlazor.Localizer["Sys.BatchDeleteSuccess", s]);
+            await dataTable.QueryAsync();
+        }
+        else
+        {
+            await WtmBlazor.Toast.Information(WtmBlazor.Localizer["Sys.Info"], WtmBlazor.Localizer["Sys.SelectOneRowMin"]);
+        }
+    }
+
+    private async Task OnDeleteClick(VAttendanceReport_View item)
+    {
+        await PostsData(new List<string> { item.ID.ToString() }, $"/api/VAttendanceReport/batchdelete", (s) => "Sys.OprationSuccess");
+        await dataTable.QueryAsync();
+    }
+
+
+    private async Task OnExportClick(IEnumerable<VAttendanceReport_View> items)
+    {
+        if (dataTable.SelectedRows?.Any() == true)
+        {
+            await Download("/api/VAttendanceReport/ExportExcelByIds", dataTable.SelectedRows.Select(x => x.ID.ToString()).ToList());
+        }
+        else
+        {
+            await Download("/api/VAttendanceReport/ExportExcel", SearchModel);
+        }
+    }
+    private async Task OnImportClick(IEnumerable<VAttendanceReport_View> items)
+    {
+        if (await OpenDialog<Import>(WtmBlazor.Localizer["Sys.Import"]) == DialogResult.Yes)
+        {
+            await dataTable.QueryAsync();
+        }
+    }
+    private async Task OnImportAttendanceClick(IEnumerable<VAttendanceReport_View> items)
+    {
+        cssDisplay = "Display"; progressValue = 0;
+        object result = null;
+        int empNum = SearchModel.EmployeeId.HasValue ? 1 : AllVAttendanceEmployees.Count;
+        result = await PostsDataResult(SearchModel, $"/api/VAttendanceReport/ImportFromDevice", (s) => WtmBlazor.Localizer["Sys.ImportAttendanceSuccess", s]);
+        if (result is not bool) {           
+            progressValue = int.Parse(result.ToString()) * 100 / (31 * 4 * empNum);
+            StateHasChanged();
+        }
+        result = await PostsDataResult(SearchModel, $"/api/VAttendanceReport/ImportFromDingtalk", (s) => WtmBlazor.Localizer["Sys.ImportAttendanceSuccess", s]);
+        if (result is not bool) {
+            progressValue = int.Parse(result.ToString()) * 100 / (31 * 4 * empNum) + 25;
+            StateHasChanged();
+        }
+        result = await PostsDataResult(SearchModel, $"/api/VAttendanceReport/Schedule", (s) => WtmBlazor.Localizer["Sys.ImportAttendanceSuccess", s]);
+        if (result is not bool) {
+            progressValue = int.Parse(result.ToString()) * 100 / (31 * 4 * empNum) + 50;
+            StateHasChanged();
+        }
+        result = await PostsDataResult(SearchModel, $"/api/VAttendanceReport/ReCalcAttendance", (s) => WtmBlazor.Localizer["Sys.ImportAttendanceSuccess", s]);
+        if (result is not bool) {
+            progressValue = int.Parse(result.ToString()) * 100 / (31 * 4 * empNum) + 75;
+            StateHasChanged();
+        }
+        progressValue = 100;
+        StateHasChanged();
+        if(SearchModel.EmployeeId.HasValue)
+            await dataTable.QueryAsync();
+
+        System.Threading.Thread.Sleep(1000);
+
+        cssDisplay = "noDisplay";
+    }
+    private async Task OnImportAttendanceAllEmployeeClick(IEnumerable<VAttendanceReport_View> items)
+    {
+        int? empid = SearchModel.EmployeeId;
+        SearchModel.EmployeeId = null;
+        await OnImportAttendanceClick(items);
+        SearchModel.EmployeeId = empid;
+        await dataTable.QueryAsync();
+        StateHasChanged();
+    }
+    private async Task<int?> GetLoginUserAttendanceEmployeeID()
+    {
+        var emp = await WtmBlazor.Api.CallAPI<List<Attendance2EmployeeRefSchemeClass>>("/api/VAttendanceReport/GetAttendanceEmployee"); 
+        if (emp.Data is null)
+            throw new UnauthorizedAccessException("用户未关联考勤员工");
+        else{
+            return emp.Data.First().EmployeeId;
+        }
+    }
+    private async Task OnPrintClick(IEnumerable<VAttendanceReport_View> items)
+    {
+        string empName = getAttendanceEmployee(SearchModel.EmployeeId??-1).EmployeeName;
+        //AllVAttendanceEmployees.Find((x)=>x.Value == SearchModel.EmployeeId.ToString()).Text;
+
+        var op = new DialogOption()
+            {
+                Title = WtmBlazor.Localizer["Sys.Print"],
+                ShowPrintButton = true,
+                ShowPrintButtonInHeader = true,
+                ShowFooter = false,
+                IsDraggable=true,
+                Size = Size.Large,
+                FullScreenSize = FullScreenSize.Large,
+                Class = "width:600px;margin:0px"
+            };
+
+        var printViewParamters = new Dictionary<string, object>();
+        printViewParamters.Add("dateRange", SearchModel.SDate);
+        printViewParamters.Add("EmpName", empName);
+        printViewParamters.Add("dataTable", dataTable.Rows);
+
+        op.Component = BootstrapDynamicComponent.CreateComponent<PrintView>(printViewParamters);
+
+        await PrintService.PrintAsync(op);
+    }
+    private async Task OffsetClick(VAttendanceReport_View item, bool isBTime)
+    {
+        item.isBTimeClicked = isBTime;
+        item.Employee = getAttendanceEmployee(item.EmployeeId);
+        var dialogResult = await OpenDialog<Record>(WtmBlazor.Localizer["Sys.Details"], x => x.record == item && x.isBTimeClick == isBTime);
+
+        await dataTable.QueryAsync();
+        StateHasChanged();
+        /*Bug:打开Dialog后，进行操作后关闭，不能正常调用dataTable.QueryAsync()*/
+        /*
+        //var op = new DialogOption() {
+        //        Title = WtmBlazor.Localizer["Sys.Details"],
+        //        ShowPrintButton = false,
+        //        ShowPrintButtonInHeader = false,
+        //        ShowFooter = false,
+        //        IsDraggable = true,
+        //        Class = "width:600px;margin:0px",
+        //        ShowCloseButton = false,//default:false
+        //        //ShowMaximizeButton = !isMax,
+        //        //FullScreenSize = isMax == true ? FullScreenSize.Always : FullScreenSize.Medium,
+        //        //Size = Size.Value,
+        //        IsScrolling = true,
+        //        BodyContext = UserInfo
+        //    };
+        //var recordParamters = new Dictionary<string, object>();
+        //recordParamters.Add("record", item);
+        //recordParamters.Add("isBTimeClick", isBTime);
+        //recordParamters.Add(nameof(Record.OnClose), new Action<DialogResult>(async (r) =>
+        //{
+        //    await op.OnCloseAsync();
+        //    //= new () { return DialogResult.Yes; };
+        //    await dataTable.QueryAsync();
+        //    StateHasChanged();
+        //}));
+
+        //op.Component = BootstrapDynamicComponent.CreateComponent<Record>(recordParamters);
+
+        //await dialogService.Show(op);
+        */
+
+    }
+
+    /*
+    private async Task ResultDialogOption_OffsetClick(VAttendanceReport_View item, bool isBTime) {
+        item.isBTimeClicked = isBTime;
+        item.Employee = getAttendanceEmployee(item.EmployeeId);
+        //var dialogResult = await OpenDialog<Record>(WtmBlazor.Localizer["Sys.Details"], x => x.record == item && x.isBTimeClick == isBTime);
+
+        var op = new ResultDialogOption() {
+                Title = WtmBlazor.Localizer["Sys.Details"],
+                ShowPrintButton = false,
+                ShowPrintButtonInHeader = false,
+                ShowFooter = false,
+                IsDraggable = true,
+                Class = "width:600px;margin:0px",
+                ShowCloseButton = false,//default:false
+                //ShowMaximizeButton = !isMax,
+                //FullScreenSize = isMax == true ? FullScreenSize.Always : FullScreenSize.Medium,
+                //Size = Size.Value,
+                IsScrolling = true,
+                BodyContext = UserInfo
+            };
+        var recordParamters = new Dictionary<string, object>();
+        recordParamters.Add("record", item);
+        recordParamters.Add("isBTimeClick", isBTime);
+        //recordParamters.Add(nameof(Record.OnClose), new Action<DialogResult>(async (r) => {
+        //    await op.OnCloseAsync();
+        //    //= new () { return DialogResult.Yes; };
+        //    await dataTable.QueryAsync();
+        //    StateHasChanged();
+        //}));
+        recordParamters.Add(nameof(Record.ClosedEvent), EventCallback.Factory.Create<bool>(this, async(v) => {
+            if(recordIsClose != v)
+                await dataTable.QueryAsync();
+        }));
+        //op.Component = BootstrapDynamicComponent.CreateComponent<Record>(recordParamters);
+
+        op.ComponentParamters = recordParamters;
+        var result = await dialogService.ShowModal<Record>(op);
+        //await dataTable.QueryAsync();
+    }
+    */
+    private async Task<bool> IsAttendanceManageRole() {
+        if (IsAccessable("/api/VAttendanceReport/IsAttendanceManageRole"))
+        {
+            try
+            {
+                var hasAttendanceManageRole = await WtmBlazor.Api.CallAPI("/api/VAttendanceReport/IsAttendanceManageRole");
+                return bool.Parse(hasAttendanceManageRole.Data);
+            } catch { return false; }
+        }
+        else
+            return false;
+    }
+}

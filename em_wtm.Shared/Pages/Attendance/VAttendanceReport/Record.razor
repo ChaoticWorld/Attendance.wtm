@@ -1,0 +1,50 @@
+﻿@page "/Attendance/VAttendanceReport/Record/{id}/{isBTimeClick}"
+@using em_wtm.ViewModel.Attendance.VAttendanceReportVMs;
+@using em_wtm.Model._Business.Attendance;
+@inherits BasePage
+@*@inherits ComponentBase*@
+
+<Card IsCollapsible="true" HeaderText="考勤记录信息">
+    <BodyTemplate>
+        @*Model.Entity*@
+        <Row ItemsPerRow="ItemsPerRow.Four" RowType="RowType.Inline">
+            <Display @bind-Value="@record.ID" ShowLabel="true"/>
+            <Display @bind-Value="@record.Employee.EmployeeName" ShowLabel="true" />
+            <Display @bind-Value="@record.SDate" ShowLabel="true" FormatString="yyyy-MM-dd" />
+            <Checkbox @bind-Value="@record.isBTimeClicked" DisplayText="点击上班事件" />
+            <Display @bind-Value="@record.BAttTime" FormatString="hh\:mm" ShowLabel="true" />
+            <Display @bind-Value="@record.BOffset" ShowLabel="true" />
+            <Display @bind-Value="@record.EAttTime" FormatString="hh\:mm" ShowLabel="true" />
+            <Display @bind-Value="@record.EOffset" ShowLabel="true" />
+        </Row>
+    </BodyTemplate>
+</Card>
+<Divider />
+<div>
+    @*<em_wtm.Shared.Pages.Attendance.Attendance2EventDeclared.Index  record="Model.Entity" recordid="Model.Entity.ID" isBTimeClick="isBTimeClick" noDisplaySearchCard='noDisplay'>
+    </em_wtm.Shared.Pages.Attendance.Attendance2EventDeclared.Index>*@
+    <em_wtm.Shared.Pages.Attendance.Attendance2EventDeclared.Index record="record" isBTimeClick="isBTimeClick" hiddenWTSearchPanel="hiddenWTSearchPanel">
+    </em_wtm.Shared.Pages.Attendance.Attendance2EventDeclared.Index>
+</div>
+
+@code {
+    //private VAttendanceReportVM Model = null;
+    [Parameter]
+    public bool isBTimeClick { get; set; }
+    [Parameter]
+    public VAttendanceReport record{ get; set; }
+    //[Parameter]
+    //public Action OnClose{ get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //var rv = await WtmBlazor.Api.CallAPI<VAttendanceReportVM>($"/api/VAttendanceReport/{id}/{isBTimeClick}");
+        //Model = rv.Data;
+        await base.OnInitializedAsync();
+    }
+
+    //public void OnClose()
+    //{
+    //    CloseDialog(DialogResult.Yes);
+    //}
+}

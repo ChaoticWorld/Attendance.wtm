@@ -1,0 +1,145 @@
+﻿@page "/Report/ReportMain"
+@using em_wtm.ViewModel.Report.ReportMainVMs;
+@inherits BasePage
+@attribute [ActionDescription("报表", "em_wtm.Controllers,ReportMain")]
+
+<WTSearchPanel OnSearch="@DoSearch">
+    <ValidateForm Model="@SearchModel">
+        <Row ItemsPerRow="ItemsPerRow.Three" RowType="RowType.Inline">
+
+        </Row>
+    </ValidateForm>
+</WTSearchPanel>
+
+
+
+<Table @ref="dataTable" TItem="ReportMain_View" OnQueryAsync="OnSearch" IsPagination="true" IsStriped="true" IsBordered="true" ShowRefresh="false"
+       ShowToolbar="true" IsMultipleSelect="true" ShowExtendButtons="true" ShowDefaultButtons="false" ShowExtendEditButton="false" ShowExtendDeleteButton="false" style="margin-top:10px;">
+    <TableColumns>
+        <TableColumn @bind-Field="@context.Description"  />
+        <TableColumn @bind-Field="@context.Name"  />
+        <TableColumn @bind-Field="@context.Title"  />
+        <TableColumn @bind-Field="@context.DBConnection"  />
+    </TableColumns>
+    <TableToolbarTemplate>
+        @if (IsAccessable("/api/ReportMain/Add"))
+        {
+            <TableToolbarButton TItem="ReportMain_View" Color="Color.Primary" Icon="fa fa-fw fa-plus" Text="@WtmBlazor.Localizer["Sys.Create"]" OnClickCallback="OnCreateClick" />
+        }
+        @if (IsAccessable("/api/ReportMain/BatchDelete"))
+        {
+            <TableToolbarPopconfirmButton TItem="ReportMain_View" Color="Color.Primary"
+                                          Icon="fa fa-fw fa-trash" Text="@WtmBlazor.Localizer["Sys.BatchDelete"]"
+                                          OnConfirm="@OnBatchDeleteClick" Content="@WtmBlazor.Localizer["Sys.BatchDeleteConfirm"]" CloseButtonText="@WtmBlazor.Localizer["Sys.Close"]"
+                                          ConfirmButtonText="@WtmBlazor.Localizer["Sys.BatchDelete"]" ConfirmButtonColor="Color.Danger" />
+        }
+        
+        @if (IsAccessable("/api/ReportMain/Import"))
+        {
+            <TableToolbarButton TItem="ReportMain_View" Color="Color.Primary" Icon="fa fa-fw fa-upload" Text="@WtmBlazor.Localizer["Sys.Import"]" OnClickCallback="@OnImportClick" />
+        }
+        @if (IsAccessable("/api/ReportMain/ExportExcel"))
+        {
+            <TableToolbarButton TItem="ReportMain_View" Color="Color.Primary" Icon="fa fa-fw fa-download" Text="@WtmBlazor.Localizer["Sys.Export"]" OnClickCallback="@OnExportClick" IsAsync="true" />
+        }
+    </TableToolbarTemplate>
+    <RowButtonTemplate>
+       <div style="padding-right:10px;">
+            @if (IsAccessable("/Report/ReportRun")) {
+                <LinkButton Size="Size.ExtraSmall" Color="Color.Success" Icon="fa fa-edit" Text="@WtmBlazor.Localizer["Report.Exec"]" Url='@GetReportRunUrl(context)' />
+            }
+            @if (IsAccessable("/Report/ReportConfig")) {
+                <LinkButton Size="Size.ExtraSmall" Color="Color.Success" Icon="fa fa-edit" Text="@WtmBlazor.Localizer["Report.Manage"]" Url='@GetReportConfigUrl(context)' />
+            }
+       </div>
+    </RowButtonTemplate>
+</Table>
+
+@code{
+    private ReportMainSearcher SearchModel = new ReportMainSearcher();
+    private Table<ReportMain_View> dataTable;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        await base.OnInitializedAsync();
+    }
+
+    private async Task<QueryData<ReportMain_View>> OnSearch(QueryPageOptions opts)
+    {
+        return await StartSearch<ReportMain_View>("/api/ReportMain/Search", SearchModel, opts);
+    }
+
+    private void DoSearch()
+    {
+        dataTable.QueryAsync();
+    }
+
+    private async Task OnCreateClick(IEnumerable<ReportMain_View> items)
+    {
+        if (await OpenDialog<Create>(WtmBlazor.Localizer["Sys.Create"]) == DialogResult.Yes)
+        {
+            await dataTable.QueryAsync();
+        }
+    }
+
+    private async Task OnEditClick(ReportMain_View item)
+    {
+        if (await OpenDialog<Edit>(WtmBlazor.Localizer["Sys.Edit"], x => x.id == item.ID) == DialogResult.Yes)
+        {
+            await dataTable.QueryAsync();
+        }
+    }
+
+    private async Task OnDetailsClick(ReportMain_View item)
+    {
+        await OpenDialog<Details>(WtmBlazor.Localizer["Sys.Details"], x => x.id == item.ID.ToString());
+    }
+
+    private async Task OnBatchDeleteClick()
+    {
+        if (dataTable.SelectedRows?.Any() == true)
+        {
+            await PostsData(dataTable.SelectedRows.Select(x => x.ID).ToList(), $"/api/ReportMain/batchdelete", (s) => WtmBlazor.Localizer["Sys.BatchDeleteSuccess", s]);
+            await dataTable.QueryAsync();
+        }
+        else
+        {
+            await WtmBlazor.Toast.Information(WtmBlazor.Localizer["Sys.Info"], WtmBlazor.Localizer["Sys.SelectOneRowMin"]);
+        }
+    }
+
+    private async Task OnDeleteClick(ReportMain_View item)
+    {
+        await PostsData(new List<string> { item.ID.ToString() }, $"/api/ReportMain/batchdelete", (s) => "Sys.OprationSuccess");
+        await dataTable.QueryAsync();
+    }
+
+
+    private async Task OnExportClick(IEnumerable<ReportMain_View> items)
+    {
+        if (dataTable.SelectedRows?.Any() == true)
+        {
+            await Download("/api/ReportMain/ExportExcelByIds", dataTable.SelectedRows.Select(x => x.ID.ToString()).ToList());
+        }
+        else
+        {
+            await Download("/api/ReportMain/ExportExcel", SearchModel);
+        }
+    }
+    private async Task OnImportClick(IEnumerable<ReportMain_View> items)
+    {
+        if (await OpenDialog<Import>(WtmBlazor.Localizer["Sys.Import"]) == DialogResult.Yes)
+        {
+            await dataTable.QueryAsync();
+        }
+    }
+    private string GetReportRunUrl(ReportMain_View item) {
+        string url = "/Report/ReportRun/" + item.ID.ToString();
+        return url;
+    }
+    private string GetReportConfigUrl(ReportMain_View item) {
+        string url = "/Report/ReportConfig/" + item.ID.ToString();
+        return url;
+    }
+}

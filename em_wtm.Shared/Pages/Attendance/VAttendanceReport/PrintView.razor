@@ -1,0 +1,102 @@
+﻿@page "/Attendance/VAttendanceReport/PrintView/{id}"
+@using System.Diagnostics.CodeAnalysis;
+@using em_wtm.ViewModel.Attendance.VAttendanceReportVMs;
+@*@inherits BasePage*@
+
+<div class="prnpage">
+    <Layout ShowFooter="false">
+        <Header>
+            <Layout SideWidth="60%">
+                <Side>
+                    <div class="text-left side" style="margin:0px 5px"><h2>考勤</h2></div>
+                </Side>
+                <Main>
+                    <div>
+                        <div>当前员工:@EmpName</div>
+                        <div style="margin:3px 0px"><label>考勤年月:@dateRange.GetStartTime()?.ToString("yyyy年MM月")</label>
+                            @*<label> ~ @dateRange.GetEndTime()?.ToString("MM-dd")</label>*@
+                        </div>
+                    </div>
+                </Main>
+            </Layout>
+        </Header>
+        <Main>
+            <Table Items="dataTable" TItem="VAttendanceReport_View" IsPagination="false" PageItems=32 IsStriped="false" IsBordered="true" ShowRefresh="false"
+                   ShowDefaultButtons="false" ShowExtendEditButton="false" ShowExtendDeleteButton="false" CssClass="printTable printFont" 
+                   TableSize="TableSize.Compact">
+                <TableColumns>
+                    <TableColumn @bind-Field="@context.SDate" FormatString="dd" Width=20 TextWrap=true CssClass="printFont" />
+                    <TableColumn @bind-Field="@context.Description" Width=60 TextWrap=true CssClass="printFont" />
+                    <TableColumn @bind-Field="@context.BAttTime" Width=45 HeaderTextWrap=true FormatString="hh\:mm" TextWrap=true CssClass="printFont"  />
+                    <TableColumn @bind-Field="@context.BOffset" Width=35 HeaderTextWrap=true TextWrap=true CssClass="printFont"  />
+                    <TableColumn @bind-Field="@context.ApprovalEmpty" Text="上班审批" Width=50 TextWrap=true HeaderTextWrap=true CssClass="printFont" />
+                    <TableColumn @bind-Field="@context.EAttTime" Width=45 HeaderTextWrap=true FormatString="hh\:mm" TextWrap=true CssClass="printFont" />
+                    <TableColumn @bind-Field="@context.EOffset" Width=40 HeaderTextWrap=true TextWrap=true CssClass="printFont" />
+                    <TableColumn @bind-Field="@context.ApprovalEmpty" Text="下班审批" Width=50 TextWrap=true HeaderTextWrap=true CssClass="printFont" />
+                    <TableColumn @bind-Field="@context.Event" TextWrap=true HeaderTextWrap=true CssClass="printFont" />@*Width=205*@
+                    <TableColumn @bind-Field="@context.Fee" Text="费用" Width=30 TextWrap=true FormatString="0" CssClass="printFont">
+						<Template Context="v">
+							<div> @v.Value.HasValue?(@v.Value.Value>0?@v.Value.Value.ToString("00"):""):""</div>
+						</Template>
+					</TableColumn> 
+                </TableColumns>
+            </Table>
+            <div style="display:inline-flex;margin:10px 0px 0px auto;border:0px solid green">
+                <div style="margin:0px 10px;width:120px;">@(fee1 == 0 ? "" : footLeft1)</div>
+                <div style="margin:0px 10px 0px 40px;width:120px;border:0px solid red">@footLeft2</div>
+                <div style="margin:0px 10px;border:0px solid blue">@footCenter</div>
+                <div style="margin:0px 10px;">@footRight</div>
+            </div>
+        </Main>
+        <Footer>
+        </Footer>
+    </Layout>
+</div>
+<style>
+    .page .prnpage {
+        /*A4 打印页边距设定为 19.05mm 时，网页内最大元素的分辨率：649×978 */
+        /*Chrome 打印A4每页默认最大分辨率:?x964 */
+        width: 649px;
+        height: 964px;
+        margin: 0px;
+        border: 0px;
+        padding: 0px;
+    }
+
+    .printFont {
+        font-size: xx-small;
+        font: 14px/1.25 "Helvetica Neue",Helvetica,Arial,"Microsoft Yahei","Hiragino Sans GB","Heiti SC","WenQuanYi Micro Hei",sans-serif;
+    }
+
+    .printTable {
+        margin-top: 0px;
+        padding:0px;
+        border: 1px solid #000000;
+    }
+</style>
+
+
+@code {
+    [Parameter]
+    public DateRange dateRange { get; set; }
+    [Parameter]
+    public string EmpName { get; set; }
+    [Parameter]
+    public List<VAttendanceReport_View> dataTable { get; set; }
+
+    private string footLeft1 = "缺勤:";
+    private string footLeft2 = "加班:";
+    private string footCenter = "主管审核:______________";
+    private string footRight = "总经理审批:______________";
+    decimal? fee2 = 0; decimal? fee1 = 0;
+    protected override async Task OnInitializedAsync() {
+        fee1 = dataTable.Where(w => w.Fee < 0).Sum(s => s.Fee);
+        fee1 = 0;//不显示缺勤
+        if (fee1 != 0)
+            footLeft1 = string.Format("缺勤:{0} 元", fee1);
+        else footLeft1 = string.Empty;
+        fee2 = dataTable.Where(w => w.Fee > 0).Sum(s => s.Fee);
+        footLeft2 = string.Format("加班:{0}", fee2.Value > 0 ? string.Format("{0} 元", fee2.Value.ToString("0")) : "");
+        await base.OnInitializedAsync();
+    }
+}

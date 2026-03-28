@@ -1,0 +1,53 @@
+﻿@page "/Report/ReportScriptParam/Details/{id}"
+@using em_wtm.ViewModel.Report.ReportScriptParamVMs;
+@inherits BasePage
+
+<ValidateForm @ref="vform" Model="@Model" >
+    <Row ItemsPerRow="ItemsPerRow.Two" RowType="RowType.Normal">
+
+            <Display @bind-Value="@Model.Entity.ReportID" Lookup="@AllReportMains"  ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.ScriptID" Lookup="@AllReportScripts"  ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.Name"   ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.Field"   ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.Description"   ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.ParamOperatorID" Lookup="@AllReportParamOperatorEnums"  ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.DefaultValue"   ShowLabel="true"/>
+    </Row>
+    <div class="modal-footer table-modal-footer">
+        <Button Color="Color.Primary" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Close"]" OnClick="OnClose" />
+    </div>
+</ValidateForm>
+
+@code {
+
+    private ReportScriptParamVM Model = null;
+    private ValidateForm vform { get; set; }
+    [Parameter]
+    public string id { get; set; }
+
+    private List<SelectedItem> AllReportMains = new List<SelectedItem>();
+
+    private List<SelectedItem> AllReportScripts = new List<SelectedItem>();
+
+    private List<SelectedItem> AllReportParamOperatorEnums = new List<SelectedItem>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        AllReportMains = await WtmBlazor.Api.CallItemsApi("/api/ReportScriptParam/GetReportMains", placeholder: WtmBlazor.Localizer["Sys.All"]);
+
+        AllReportScripts = await WtmBlazor.Api.CallItemsApi("/api/ReportScriptParam/GetReportScripts", placeholder: WtmBlazor.Localizer["Sys.All"]);
+
+        AllReportParamOperatorEnums = await WtmBlazor.Api.CallItemsApi("/api/ReportScriptParam/GetReportParamOperatorEnums", placeholder: WtmBlazor.Localizer["Sys.All"]);
+
+        var rv = await WtmBlazor.Api.CallAPI<ReportScriptParamVM>($"/api/ReportScriptParam/{id}");
+        Model = rv.Data;
+    }
+
+    public void OnClose()
+    {
+        CloseDialog();
+    }
+
+}

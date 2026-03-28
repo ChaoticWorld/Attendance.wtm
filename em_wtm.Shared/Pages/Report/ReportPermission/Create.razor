@@ -1,0 +1,48 @@
+﻿@page "/Report/ReportPermission/Create"
+@using em_wtm.ViewModel.Report.ReportPermissionVMs;
+@inherits BasePage
+
+<ValidateForm @ref="vform" Model="@Model" OnValidSubmit="@Submit">
+    <Row ItemsPerRow="ItemsPerRow.Two" RowType="RowType.Normal">
+
+            <Select @bind-Value="@Model.Entity.ReportId" Items="@AllReportMains" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]"/>
+            <Select @bind-Value="@Model.Entity.UserId" Items="@AllFrameworkUsers" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]"/>
+    </Row>
+    <div class="modal-footer table-modal-footer">
+        <Button Color="Color.Secondary" Icon="fa fa-close" Text="@WtmBlazor.Localizer["Sys.Close"]" OnClick="OnClose" />
+        <Button Color="Color.Primary" ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Create"]" IsAsync="true" />
+    </div>
+</ValidateForm>
+
+@code {
+
+    private ReportPermissionVM Model = new ReportPermissionVM();
+    private ValidateForm vform { get; set; }
+
+    private List<SelectedItem> AllReportMains = new List<SelectedItem>();
+
+    private List<SelectedItem> AllFrameworkUsers = new List<SelectedItem>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        AllReportMains = await WtmBlazor.Api.CallItemsApi("/api/ReportPermission/GetReportMains", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        AllFrameworkUsers = await WtmBlazor.Api.CallItemsApi("/api/ReportPermission/GetFrameworkUsers", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        await base.OnInitializedAsync();
+    }
+
+
+    private async Task Submit(EditContext context)
+    {
+        await PostsForm(vform, "/api/ReportPermission/add", (s) => "Sys.OprationSuccess");
+    }
+
+    public void OnClose()
+    {
+        CloseDialog();
+    }
+
+}

@@ -1,0 +1,63 @@
+﻿@page "/Report/ReportScriptParam/Edit/{id}"
+@using em_wtm.ViewModel.Report.ReportScriptParamVMs;
+@inherits BasePage
+
+<ValidateForm @ref="vform" Model="@Model" OnValidSubmit="@Submit">
+    <Row ItemsPerRow="ItemsPerRow.Two" RowType="RowType.Inline">
+        <Select @bind-Value="@Model.Entity.ReportID" IsDisabled="@isDisabledReport" DisplayText="报表" Items="@AllReportMains" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]" />
+        <Select @bind-Value="@Model.Entity.ScriptID" IsDisabled="@isDisabledScript" DisplayText="脚本" Items="@AllReportScripts" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]" />
+
+        <BootstrapInput @bind-Value="@Model.Entity.Name"  />
+        <BootstrapInput @bind-Value="@Model.Entity.Field"  />
+        <BootstrapInput @bind-Value="@Model.Entity.Description"  />
+        <Select @bind-Value="@Model.Entity.ParamOperatorID" Items="@AllReportParamOperatorEnums" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]"/>
+        <BootstrapInput @bind-Value="@Model.Entity.DefaultValue"  />
+    </Row>
+    <div class="modal-footer table-modal-footer">
+        <Button Color="Color.Primary" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Close"]" OnClick="OnClose" />
+        <Button Color="Color.Primary" ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Edit"]" IsAsync="true" />
+    </div>
+</ValidateForm>
+
+@code {
+
+    private ReportScriptParamVM Model = null;
+    private ValidateForm vform { get; set; }
+    [Parameter]
+    public int id { get; set; }
+
+    private List<SelectedItem> AllReportMains = new List<SelectedItem>();
+
+    private List<SelectedItem> AllReportScripts = new List<SelectedItem>();
+
+    private List<SelectedItem> AllReportParamOperatorEnums = new List<SelectedItem>();
+    private bool isDisabledReport = false;
+    private bool isDisabledScript = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        AllReportMains = await WtmBlazor.Api.CallItemsApi("/api/ReportScriptParam/GetReportMains", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        AllReportScripts = await WtmBlazor.Api.CallItemsApi("/api/ReportScriptParam/GetReportScripts", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        AllReportParamOperatorEnums = await WtmBlazor.Api.CallItemsApi("/api/ReportScriptParam/GetReportParamOperatorEnums", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        var rv = await WtmBlazor.Api.CallAPI<ReportScriptParamVM>($"/api/ReportScriptParam/{id}");
+        Model = rv.Data;
+        isDisabledReport = Model.Entity.ReportID > 0;
+        isDisabledScript = Model.Entity.ScriptID > 0;
+         await base.OnInitializedAsync();
+   }
+
+    private async Task Submit(EditContext context)
+    {
+        await PostsForm(vform, $"/api/ReportScriptParam/edit", (s) => "Sys.OprationSuccess", method: HttpMethodEnum.PUT);
+    }
+
+    public void OnClose()
+    {
+        CloseDialog();
+    }
+
+}

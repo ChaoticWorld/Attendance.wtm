@@ -1,0 +1,66 @@
+﻿@page "/Attendance/Attendance2Record/Create"
+@using em_wtm.ViewModel.Attendance.Attendance2RecordVMs;
+@inherits BasePage
+
+<ValidateForm @ref="vform" Model="@Model" OnValidSubmit="@Submit">
+    <Row ItemsPerRow="ItemsPerRow.Two" RowType="RowType.Normal">
+
+            <Select @bind-Value="@Model.Entity.EmployeeId" Items="@AllVAttendanceEmployees" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]"/>
+            <BootstrapInputNumber @bind-Value="@Model.Entity.PeriodNo"  />
+            <DateTimePicker @bind-Value="@Model.Entity.SDate"  />
+            <BootstrapInput @bind-Value="@Model.Entity.BAttTime"  />
+            <BootstrapInput @bind-Value="@Model.Entity.EAttTime"  />
+            <BootstrapInputNumber @bind-Value="@Model.Entity.BOffset"  />
+            <BootstrapInputNumber @bind-Value="@Model.Entity.EOffset"  />
+            <BootstrapInputNumber @bind-Value="@Model.Entity.BOffsetFee"  />
+            <BootstrapInputNumber @bind-Value="@Model.Entity.EOffsetFee"  />
+            <Select @bind-Value="@Model.Entity.DayTypeId" Items="@AllAttendance2DayTypes" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]"/>
+            <Select @bind-Value="@Model.Entity.PlanId" Items="@AllAttendance2PlanTimes" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]"/>
+            <Select @bind-Value="@Model.Entity.ClassId" Items="@AllAttendance2SchemeClasss" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]"/>
+    </Row>
+    <div class="modal-footer table-modal-footer">
+        <Button Color="Color.Secondary" Icon="fa fa-close" Text="@WtmBlazor.Localizer["Sys.Close"]" OnClick="OnClose" />
+        <Button Color="Color.Primary" ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Create"]" IsAsync="true" />
+    </div>
+</ValidateForm>
+
+@code {
+
+    private Attendance2RecordVM Model = new Attendance2RecordVM();
+    private ValidateForm vform { get; set; }
+
+    private List<SelectedItem> AllVAttendanceEmployees = new List<SelectedItem>();
+
+    private List<SelectedItem> AllAttendance2DayTypes = new List<SelectedItem>();
+
+    private List<SelectedItem> AllAttendance2PlanTimes = new List<SelectedItem>();
+
+    private List<SelectedItem> AllAttendance2SchemeClasss = new List<SelectedItem>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        AllVAttendanceEmployees = await WtmBlazor.Api.CallItemsApi("/api/Attendance2Record/GetVAttendanceEmployees", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        AllAttendance2DayTypes = await WtmBlazor.Api.CallItemsApi("/api/Attendance2Record/GetAttendance2DayTypes", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        AllAttendance2PlanTimes = await WtmBlazor.Api.CallItemsApi("/api/Attendance2Record/GetAttendance2PlanTimes", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        AllAttendance2SchemeClasss = await WtmBlazor.Api.CallItemsApi("/api/Attendance2Record/GetAttendance2SchemeClasss", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        await base.OnInitializedAsync();
+    }
+
+
+    private async Task Submit(EditContext context)
+    {
+        await PostsForm(vform, "/api/Attendance2Record/add", (s) => "Sys.OprationSuccess");
+    }
+
+    public void OnClose()
+    {
+        CloseDialog();
+    }
+
+}

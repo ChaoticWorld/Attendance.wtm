@@ -1,0 +1,55 @@
+﻿@page "/Report/ReportScript/Edit/{id}"
+@using em_wtm.ViewModel.Report.ReportScriptVMs;
+@inherits BasePage
+
+<ValidateForm @ref="vform" Model="@Model" OnValidSubmit="@Submit">
+    <Row ItemsPerRow="ItemsPerRow.Two" RowType="RowType.Normal">
+
+            <Select @bind-Value="@Model.Entity.ReportID" DisplayText="报表" IsDisabled="@isDisabled" Items="@AllReportMains" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]"/>
+            <BootstrapInput @bind-Value="@Model.Entity.Script"  />
+            <Select @bind-Value="@Model.Entity.ScriptTypeId" Items="@AllReportScriptTypeEnums" PlaceHolder="@WtmBlazor.Localizer["Sys.PleaseSelect"]"/>
+            <BootstrapInputNumber @bind-Value="@Model.Entity.ScriptOrder"  />
+    </Row>
+    <div class="modal-footer table-modal-footer">
+        <Button Color="Color.Primary" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Close"]" OnClick="OnClose" />
+        <Button Color="Color.Primary" ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Edit"]" IsAsync="true" />
+    </div>
+</ValidateForm>
+<Divider Text="参数" />
+<em_wtm.Shared.Pages.Report.ReportScriptParam.Index ScriptID="@id" hiddenWTSearchPanel="hiddenWTSearchPanel" />
+@code {
+
+    private ReportScriptVM Model = null;
+    private ValidateForm vform { get; set; }
+    [Parameter]
+    public int id { get; set; } = -1;
+
+    private List<SelectedItem> AllReportMains = new List<SelectedItem>();
+
+    private List<SelectedItem> AllReportScriptTypeEnums = new List<SelectedItem>();
+    private bool isDisabled = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        AllReportMains = await WtmBlazor.Api.CallItemsApi("/api/ReportScript/GetReportMains", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        AllReportScriptTypeEnums = await WtmBlazor.Api.CallItemsApi("/api/ReportScript/GetReportScriptTypeEnums", placeholder: WtmBlazor.Localizer["Sys.PleaseSelect"]);
+
+        var rv = await WtmBlazor.Api.CallAPI<ReportScriptVM>($"/api/ReportScript/{id}");
+        Model = rv.Data;
+        isDisabled = Model.Entity.ReportID > 0;
+        await base.OnInitializedAsync();
+   }
+
+    private async Task Submit(EditContext context)
+    {
+        await PostsForm(vform, $"/api/ReportScript/edit", (s) => "Sys.OprationSuccess", method: HttpMethodEnum.PUT);
+    }
+
+    public void OnClose()
+    {
+        CloseDialog();
+    }
+
+}

@@ -1,0 +1,176 @@
+﻿@page "/Report/ReportScriptParam"
+@using em_wtm.ViewModel.Report.ReportScriptParamVMs;
+@using em_wtm.ViewModel.Report.ReportScriptVMs;
+@inherits BasePage
+@attribute [ActionDescription("报表脚本参数", "em_wtm.Controllers,ReportScriptParam")]
+
+<div class="@hiddenWTSearchPanel">
+<WTSearchPanel OnSearch="@DoSearch">
+    <ValidateForm Model="@SearchModel">
+        <Row ItemsPerRow="ItemsPerRow.Three" RowType="RowType.Inline">
+            <Select @bind-Value="@SearchModel.ReportID" DisplayText="报表" Items="@AllReportMains" PlaceHolder="@WtmBlazor.Localizer["Sys.All"]" />
+            <Select @bind-Value="@SearchModel.ScriptID" DisplayText="脚本" Items="@AllReportScripts" PlaceHolder="@WtmBlazor.Localizer["Sys.All"]" />
+        </Row>
+    </ValidateForm>
+</WTSearchPanel>
+</div>
+
+
+<Table @ref="dataTable" TItem="ReportScriptParam_View" OnQueryAsync="OnSearch" IsPagination="true" IsStriped="true" IsBordered="true" ShowRefresh="false"
+       ShowToolbar="showToolBar" IsMultipleSelect="true" ShowExtendButtons="true" ShowDefaultButtons="false" ShowExtendEditButton="false" ShowExtendDeleteButton="false" style="margin-top:10px;">
+    <TableColumns>
+
+        <TableColumn @bind-Field="@context.Name_view"  />
+        <TableColumn @bind-Field="@context.Script_view"  />
+        <TableColumn @bind-Field="@context.Name"  />
+        <TableColumn @bind-Field="@context.Field"  />
+        <TableColumn @bind-Field="@context.Description"  />
+        <TableColumn @bind-Field="@context.Operator_view"  />
+        <TableColumn @bind-Field="@context.DefaultValue"  />
+    </TableColumns>
+    <TableToolbarTemplate >
+        @if (IsAccessable("/api/ReportScriptParam/Add"))
+        {
+            <TableToolbarButton TItem="ReportScriptParam_View" Color="Color.Primary" Icon="fa fa-fw fa-plus" Text="@WtmBlazor.Localizer["Sys.Create"]" OnClickCallback="OnCreateClick" />
+        }
+        @if (IsAccessable("/api/ReportScriptParam/BatchDelete"))
+        {
+            <TableToolbarPopconfirmButton TItem="ReportScriptParam_View" Color="Color.Primary"
+                                          Icon="fa fa-fw fa-trash" Text="@WtmBlazor.Localizer["Sys.BatchDelete"]"
+                                          OnConfirm="@OnBatchDeleteClick" Content="@WtmBlazor.Localizer["Sys.BatchDeleteConfirm"]" CloseButtonText="@WtmBlazor.Localizer["Sys.Close"]"
+                                          ConfirmButtonText="@WtmBlazor.Localizer["Sys.BatchDelete"]" ConfirmButtonColor="Color.Danger" />
+        }
+        
+        @if (IsAccessable("/api/ReportScriptParam/Import"))
+        {
+            <TableToolbarButton TItem="ReportScriptParam_View" Color="Color.Primary" Icon="fa fa-fw fa-upload" Text="@WtmBlazor.Localizer["Sys.Import"]" OnClickCallback="@OnImportClick" />
+        }
+        @if (IsAccessable("/api/ReportScriptParam/ExportExcel"))
+        {
+            <TableToolbarButton TItem="ReportScriptParam_View" Color="Color.Primary" Icon="fa fa-fw fa-download" Text="@WtmBlazor.Localizer["Sys.Export"]" OnClickCallback="@OnExportClick" IsAsync="true" />
+        }
+    </TableToolbarTemplate>
+    <RowButtonTemplate>
+        <div style="padding-right:10px;">
+            @if (IsAccessable("/api/ReportScriptParam/Edit"))
+            {
+                <TableCellButton Size="Size.ExtraSmall" Color="Color.Success" Icon="fa fa-edit" Text="@WtmBlazor.Localizer["Sys.Edit"]" OnClick="() => OnEditClick(context)" />
+            }
+            @if (IsAccessable("/api/ReportScriptParam/{id}"))
+            {
+                <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-info" Text="@WtmBlazor.Localizer["Sys.Details"]" OnClick="()=>OnDetailsClick(context)" />
+            }
+            @if (IsAccessable("/api/ReportScriptParam/BatchDelete"))
+            {
+                <PopConfirmButton Icon="fa fa-trash" Text="@WtmBlazor.Localizer["Sys.Delete"]" OnConfirm="() => OnDeleteClick(context)" Color="Color.Danger" Size="Size.ExtraSmall"
+                                  Content="@WtmBlazor.Localizer["Sys.DeleteConfirm"]" CloseButtonText="@WtmBlazor.Localizer["Sys.Close"]" ConfirmButtonText="@WtmBlazor.Localizer["Sys.Delete"]" ConfirmButtonColor="Color.Danger" />
+            }
+        </div>
+    </RowButtonTemplate>
+</Table>
+
+@code{
+    [Parameter]
+    public string hiddenWTSearchPanel { get; set; }
+    [Parameter]
+    public int ScriptID { get; set; } = -1;
+    [Parameter]
+    public bool showToolBar { get; set; } = true;
+
+
+    private ReportScriptParamSearcher SearchModel = new ReportScriptParamSearcher();
+    private Table<ReportScriptParam_View> dataTable;
+
+    private List<SelectedItem> AllReportMains = new List<SelectedItem>();
+
+    private List<SelectedItem> AllReportScripts = new List<SelectedItem>();
+    private ReportScriptVM scriptVM;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        AllReportMains = await WtmBlazor.Api.CallItemsApi("/api/ReportScriptParam/GetReportMains", placeholder: WtmBlazor.Localizer["Sys.All"]);
+
+        if (ScriptID > 0)
+        {
+            var rv = await WtmBlazor.Api.CallAPI<ReportScriptVM>($"/api/ReportScript/{ScriptID}");
+            scriptVM = rv.Data;
+        }
+
+        AllReportScripts = await WtmBlazor.Api.CallItemsApi("/api/ReportScriptParam/GetReportScripts", placeholder: WtmBlazor.Localizer["Sys.All"]);
+        await base.OnInitializedAsync();
+    }
+
+    private async Task<QueryData<ReportScriptParam_View>> OnSearch(QueryPageOptions opts)    {
+        if (scriptVM != null) {
+            SearchModel.ScriptID = scriptVM?.Entity?.ID;
+            SearchModel.ReportID = scriptVM?.Entity?.ReportID;
+        }
+        return await StartSearch<ReportScriptParam_View>("/api/ReportScriptParam/Search", SearchModel, opts);
+    }
+
+    private void DoSearch()
+    {
+        dataTable.QueryAsync();
+    }
+
+    private async Task OnCreateClick(IEnumerable<ReportScriptParam_View> items)
+    {
+        if (await OpenDialog<Create>(WtmBlazor.Localizer["Sys.Create"], x => x.ScriptID == ScriptID && x.ReportID == scriptVM.Entity.ReportID) == DialogResult.Yes)
+        {
+            await dataTable.QueryAsync();
+        }
+    }
+
+    private async Task OnEditClick(ReportScriptParam_View item)
+    {
+        if (await OpenDialog<Edit>(WtmBlazor.Localizer["Sys.Edit"], x => x.id == item.ID) == DialogResult.Yes)
+        {
+            await dataTable.QueryAsync();
+        }
+    }
+
+    private async Task OnDetailsClick(ReportScriptParam_View item)
+    {
+        await OpenDialog<Details>(WtmBlazor.Localizer["Sys.Details"], x => x.id == item.ID.ToString());
+    }
+
+    private async Task OnBatchDeleteClick()
+    {
+        if (dataTable.SelectedRows?.Any() == true)
+        {
+            await PostsData(dataTable.SelectedRows.Select(x => x.ID).ToList(), $"/api/ReportScriptParam/batchdelete", (s) => WtmBlazor.Localizer["Sys.BatchDeleteSuccess", s]);
+            await dataTable.QueryAsync();
+        }
+        else
+        {
+            await WtmBlazor.Toast.Information(WtmBlazor.Localizer["Sys.Info"], WtmBlazor.Localizer["Sys.SelectOneRowMin"]);
+        }
+    }
+
+    private async Task OnDeleteClick(ReportScriptParam_View item)
+    {
+        await PostsData(new List<string> { item.ID.ToString() }, $"/api/ReportScriptParam/batchdelete", (s) => "Sys.OprationSuccess");
+        await dataTable.QueryAsync();
+    }
+
+
+    private async Task OnExportClick(IEnumerable<ReportScriptParam_View> items)
+    {
+        if (dataTable.SelectedRows?.Any() == true)
+        {
+            await Download("/api/ReportScriptParam/ExportExcelByIds", dataTable.SelectedRows.Select(x => x.ID.ToString()).ToList());
+        }
+        else
+        {
+            await Download("/api/ReportScriptParam/ExportExcel", SearchModel);
+        }
+    }
+    private async Task OnImportClick(IEnumerable<ReportScriptParam_View> items)
+    {
+        if (await OpenDialog<Import>(WtmBlazor.Localizer["Sys.Import"]) == DialogResult.Yes)
+        {
+            await dataTable.QueryAsync();
+        }
+    }
+}

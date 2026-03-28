@@ -1,0 +1,28 @@
+﻿@using em_wtm.ViewModel.Report.ReportScriptParamVMs;
+@using em_wtm.ViewModel.Report.ReportMainVMs;
+@inherits BasePage
+
+<h4>Search </h4>
+<div>Search Items Count: @filters.Count()</div>
+
+@code {
+    [Parameter]
+    public int reportId{ get; set; }
+
+    private List<string> filters{ get; set; }
+
+
+    protected override async Task OnInitializedAsync() {
+        await InitBase();
+        await base.OnInitializedAsync();
+    }
+
+    private async Task InitBase() {
+        //Get ReportScriptParams
+        var rv = await WtmBlazor.Api.CallAPI<ReportScriptParamVM>($"/api/ReportScriptParam/{reportId}");
+        var retReportMain = await WtmBlazor.Api.CallAPI<ReportMainVM>($"/api/ReportMain/{reportId}");
+        var ReportScriptParams = rv.Data;
+        //retReportMain.Data.Entity
+        //Get
+    }
+}

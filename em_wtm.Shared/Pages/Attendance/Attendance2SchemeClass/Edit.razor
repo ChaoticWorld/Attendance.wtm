@@ -1,0 +1,45 @@
+﻿@page "/Attendance/Attendance2SchemeClass/Edit/{id}"
+@using em_wtm.ViewModel.Attendance.Attendance2SchemeClassVMs;
+@inherits BasePage
+
+<ValidateForm @ref="vform" Model="@Model" OnValidSubmit="@Submit">
+    <Row ItemsPerRow="ItemsPerRow.Two" RowType="RowType.Normal">
+
+            <BootstrapInput @bind-Value="@Model.Entity.ClassName"  />
+            <BootstrapInputNumber @bind-Value="@Model.Entity.Periods"  />
+            <BootstrapInput @bind-Value="@Model.Entity.ClassDescription"  />
+            <BootstrapInputNumber @bind-Value="@Model.Entity.ClassPeriods"  />
+    </Row>
+    <div class="modal-footer table-modal-footer">
+        <Button Color="Color.Primary" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Close"]" OnClick="OnClose" />
+        <Button Color="Color.Primary" ButtonType="ButtonType.Submit" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Edit"]" IsAsync="true" />
+    </div>
+</ValidateForm>
+
+@code {
+
+    private Attendance2SchemeClassVM Model = null;
+    private ValidateForm vform { get; set; }
+    [Parameter]
+    public string id { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var rv = await WtmBlazor.Api.CallAPI<Attendance2SchemeClassVM>($"/api/Attendance2SchemeClass/{id}");
+        Model = rv.Data;
+         await base.OnInitializedAsync();
+   }
+
+    private async Task Submit(EditContext context)
+    {
+        await PostsForm(vform, $"/api/Attendance2SchemeClass/edit", (s) => "Sys.OprationSuccess", method: HttpMethodEnum.PUT);
+    }
+
+    public void OnClose()
+    {
+        CloseDialog();
+    }
+
+}

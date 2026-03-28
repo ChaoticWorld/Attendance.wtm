@@ -1,0 +1,116 @@
+﻿@*@page "/Report/ReportRun/{ReportID:int}"*@
+@page "/Report/ReportTemplate"
+@using em_wtm.ViewModel.Report.ReportMainVMs;
+@inherits BasePage
+<div>
+<Filter></Filter>
+<h2>@reportTitle</h2>
+
+    <WTSearchPanel OnSearch="@DoSearch">
+        <ValidateForm Model="@SearchModel">
+            <Row ItemsPerRow="ItemsPerRow.Three" RowType="RowType.Inline">
+                @foreach(object searchField in SearchModel)
+                    <BootstrapInput @bind-Value=@searchField />
+
+               @* <BootstrapInput @bind-Value="@SearchModel.Description" />*@
+            </Row>
+        </ValidateForm>
+    </WTSearchPanel>
+
+
+
+    <Table @ref="dataTable" TItem="Attendance2PlanTime_View" OnQueryAsync="OnSearch" IsPagination="true" IsStriped="true" IsBordered="true" ShowRefresh="false"
+           ShowToolbar="true" IsMultipleSelect="true" ShowExtendButtons="true" ShowDefaultButtons="false" ShowExtendEditButton="false" ShowExtendDeleteButton="false" style="margin-top:10px;">
+        <TableColumns>
+
+            <TableColumn @bind-Field="@context.PlanName" />
+            <TableColumn @bind-Field="@context.DayTypeName_view" />
+            <TableColumn @bind-Field="@context.Description" />
+        </TableColumns>
+        <TableToolbarTemplate>
+            <TableToolbarButton TItem="VAttendanceReport_View" Color="Color.Primary" Icon="fa fa-fw fa-print" Text="@WtmBlazor.Localizer["Sys.Print"]" OnClickCallback="@OnPrintClick" />
+
+            @if (IsAccessable("/api/Attendance2PlanTime/ExportExcel")) {
+                <TableToolbarButton TItem="Attendance2PlanTime_View" Color="Color.Primary" Icon="fa fa-fw fa-download" Text="@WtmBlazor.Localizer["Sys.Export"]" OnClickCallback="@OnExportClick" IsAsync="true" />
+            }
+        </TableToolbarTemplate>
+        <RowButtonTemplate>
+            <div style="padding-right:10px;">
+                @if (IsAccessable("/api/Attendance2PlanTime/{id}")) {
+                    <TableCellButton Size="Size.ExtraSmall" Color="Color.Info" Icon="fa fa-info" Text="@WtmBlazor.Localizer["Sys.Details"]" OnClick="()=>OnDetailsClick(context)" />
+                }
+            </div>
+        </RowButtonTemplate>
+    </Table>
+</div>
+@code {
+    [Parameter]
+    public string reportTitle { get; set; }
+    [Parameter]
+    public ReportMainVM report { get; set; }
+
+
+
+    private dynamic SearchModel;
+    private object dataTable;
+    //private Table<T> dataTable;
+
+
+    protected override async Task OnInitializedAsync() {
+        
+        await base.OnInitializedAsync();
+    }
+
+    private async Task<QueryData<Attendance2PlanTime_View>> OnSearch(QueryPageOptions opts) {
+        return await StartSearch<Attendance2PlanTime_View>("/api/Attendance2PlanTime/Search", SearchModel, opts);
+    }
+
+    private void DoSearch() {
+        dataTable.QueryAsync();
+    }
+
+    private async Task OnCreateClick(IEnumerable<Attendance2PlanTime_View> items) {
+        if (await OpenDialog<Create>(WtmBlazor.Localizer["Sys.Create"]) == DialogResult.Yes) {
+            await dataTable.QueryAsync();
+        }
+    }
+
+    private async Task OnEditClick(Attendance2PlanTime_View item) {
+        if (await OpenDialog<Edit>(WtmBlazor.Localizer["Sys.Edit"], x => x.id == item.ID.ToString()) == DialogResult.Yes) {
+            await dataTable.QueryAsync();
+        }
+    }
+
+    private async Task OnDetailsClick(Attendance2PlanTime_View item) {
+        await OpenDialog<Details>(WtmBlazor.Localizer["Sys.Details"], x => x.id == item.ID.ToString());
+    }
+
+    private async Task OnBatchDeleteClick() {
+        if (dataTable.SelectedRows?.Any() == true) {
+            await PostsData(dataTable.SelectedRows.Select(x => x.ID).ToList(), $"/api/Attendance2PlanTime/batchdelete", (s) => WtmBlazor.Localizer["Sys.BatchDeleteSuccess", s]);
+            await dataTable.QueryAsync();
+        } else {
+            await WtmBlazor.Toast.Information(WtmBlazor.Localizer["Sys.Info"], WtmBlazor.Localizer["Sys.SelectOneRowMin"]);
+        }
+    }
+
+    private async Task OnDeleteClick(Attendance2PlanTime_View item) {
+        await PostsData(new List<string> { item.ID.ToString() }, $"/api/Attendance2PlanTime/batchdelete", (s) => "Sys.OprationSuccess");
+        await dataTable.QueryAsync();
+    }
+
+
+    private async Task OnExportClick(IEnumerable<Attendance2PlanTime_View> items) {
+        if (dataTable.SelectedRows?.Any() == true) {
+            await Download("/api/Attendance2PlanTime/ExportExcelByIds", dataTable.SelectedRows.Select(x => x.ID.ToString()).ToList());
+        } else {
+            await Download("/api/Attendance2PlanTime/ExportExcel", SearchModel);
+        }
+    }
+    private async Task OnImportClick(IEnumerable<Attendance2PlanTime_View> items) {
+        if (await OpenDialog<Import>(WtmBlazor.Localizer["Sys.Import"]) == DialogResult.Yes) {
+            await dataTable.QueryAsync();
+        }
+    }
+
+}

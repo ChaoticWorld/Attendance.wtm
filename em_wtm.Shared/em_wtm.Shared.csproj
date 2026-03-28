@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Report\ReportTemplate\Index.razor" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="BootstrapBlazor" Version="7.10.7" />
+    <PackageReference Include="BootstrapBlazor.Chart" Version="7.6.0" />
+    <PackageReference Include="BootstrapBlazor.Dock" Version="7.0.11" />
+    <PackageReference Include="BootstrapBlazor.Markdown" Version="7.2.1" />
+     <PackageReference Include="BootstrapBlazor.SummerNote" Version="7.3.4" />
+   <ProjectReference Include="..\em_wtm.ViewModel\em_wtm.ViewModel.csproj" />
+  </ItemGroup>
+</Project>
+

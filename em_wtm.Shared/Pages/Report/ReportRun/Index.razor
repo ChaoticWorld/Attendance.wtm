@@ -1,0 +1,42 @@
+﻿@page "/Report/ReportRun/{ReportID:int}"
+@*上面指定参数 param:type 指定参数数据类型。如果类型未指定，参数默认为string类型，页面在SetParametersAsync生命周期进入死循环，不能调用OnInitializedAsync，页面不显示。*@
+@using em_wtm.ViewModel.Report.ReportMainVMs;
+@inherits BasePage
+@*@attribute [ActionDescription("报表Run", "em_wtm.Controllers,ReportMain")]*@
+@attribute [TabItemOption(Text = "@报表Run", Icon = "fa-solid fa-font-awesome")]
+
+<em_wtm.Shared.Pages.Report.ReportTemplate.Index reportTitle="@reportName" report="@Model"></em_wtm.Shared.Pages.Report.ReportTemplate.Index>
+
+<div >报表条件</div>
+@if (!string.IsNullOrEmpty(url))
+{
+    <Outside url="@url"></Outside>
+}
+
+@code {
+    [Parameter]
+    public int ReportID { get; set; }
+
+    [CascadingParameter]
+    private TabItem? TabItem { get; set; }
+
+    private string url{ get; set; }
+    private ReportMainVM Model {get;set;}
+    private static string reportName;
+    protected override async Task OnInitializedAsync()
+    {
+        url = "http://192.168.101.20/link/BLQEkeTm";
+        await base.OnInitializedAsync();
+        var rv = await WtmBlazor.Api.CallAPI<ReportMainVM>($"/api/ReportMain/{ReportID}");
+        Model = rv.Data;
+        reportName = Model.Entity.Name;
+
+        TabItem.SetHeader(reportName);
+    }
+
+    public void OnClose()
+    {
+        CloseDialog();
+    }
+
+}

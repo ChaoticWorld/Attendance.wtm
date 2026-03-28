@@ -1,0 +1,40 @@
+﻿@page "/Report/ReportTemplate/Run/{id:int}"
+@using em_wtm.ViewModel.Report.ReportMainVMs;
+@inherits BasePage
+
+<div>RunTest</div>
+<h2>@reportTitle</h2>
+<Searcher></Searcher>
+<DockView>
+    <DockContent>
+        <DockComponent>
+            <ContentTable>  </ContentTable>
+        </DockComponent>
+    </DockContent>
+</DockView>
+@code {
+    string reportTitle{ get; set; }
+
+    [Parameter]
+    public int reportId { get; set; }
+
+    protected override async Task OnInitializedAsync() {
+        await InitBase();
+        await base.OnInitializedAsync();
+        await GetUserData();
+    }
+
+    private async Task InitBase() {
+        //Get ReportMain
+        var rv = await WtmBlazor.Api.CallAPI<ReportMainVM>($"/api/ReportMain/{reportId}");
+        var reportMain = rv.Data.Entity;
+        reportTitle = reportMain.Title; 
+
+        //Get DockParams
+
+    }
+
+    private async Task GetUserData() {
+        
+    }
+}

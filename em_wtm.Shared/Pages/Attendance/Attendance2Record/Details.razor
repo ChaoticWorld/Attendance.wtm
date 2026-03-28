@@ -1,0 +1,62 @@
+﻿@page "/Attendance/Attendance2Record/Details/{id}"
+@using em_wtm.ViewModel.Attendance.Attendance2RecordVMs;
+@inherits BasePage
+
+<ValidateForm @ref="vform" Model="@Model" >
+    <Row ItemsPerRow="ItemsPerRow.Two" RowType="RowType.Normal">
+
+            <Display @bind-Value="@Model.Entity.EmployeeId" Lookup="@AllVAttendanceEmployees"  ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.PeriodNo"   ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.SDate"   ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.BAttTime"   ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.EAttTime"   ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.BOffset"   ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.EOffset"   ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.BOffsetFee"   ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.EOffsetFee"   ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.DayTypeId" Lookup="@AllAttendance2DayTypes"  ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.PlanId" Lookup="@AllAttendance2PlanTimes"  ShowLabel="true"/>
+            <Display @bind-Value="@Model.Entity.ClassId" Lookup="@AllAttendance2SchemeClasss"  ShowLabel="true"/>
+    </Row>
+    <div class="modal-footer table-modal-footer">
+        <Button Color="Color.Primary" Icon="fa fa-save" Text="@WtmBlazor.Localizer["Sys.Close"]" OnClick="OnClose" />
+    </div>
+</ValidateForm>
+
+@code {
+
+    private Attendance2RecordVM Model = null;
+    private ValidateForm vform { get; set; }
+    [Parameter]
+    public string id { get; set; }
+
+    private List<SelectedItem> AllVAttendanceEmployees = new List<SelectedItem>();
+
+    private List<SelectedItem> AllAttendance2DayTypes = new List<SelectedItem>();
+
+    private List<SelectedItem> AllAttendance2PlanTimes = new List<SelectedItem>();
+
+    private List<SelectedItem> AllAttendance2SchemeClasss = new List<SelectedItem>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        AllVAttendanceEmployees = await WtmBlazor.Api.CallItemsApi("/api/Attendance2Record/GetVAttendanceEmployees", placeholder: WtmBlazor.Localizer["Sys.All"]);
+
+        AllAttendance2DayTypes = await WtmBlazor.Api.CallItemsApi("/api/Attendance2Record/GetAttendance2DayTypes", placeholder: WtmBlazor.Localizer["Sys.All"]);
+
+        AllAttendance2PlanTimes = await WtmBlazor.Api.CallItemsApi("/api/Attendance2Record/GetAttendance2PlanTimes", placeholder: WtmBlazor.Localizer["Sys.All"]);
+
+        AllAttendance2SchemeClasss = await WtmBlazor.Api.CallItemsApi("/api/Attendance2Record/GetAttendance2SchemeClasss", placeholder: WtmBlazor.Localizer["Sys.All"]);
+
+        var rv = await WtmBlazor.Api.CallAPI<Attendance2RecordVM>($"/api/Attendance2Record/{id}");
+        Model = rv.Data;
+    }
+
+    public void OnClose()
+    {
+        CloseDialog();
+    }
+
+}
